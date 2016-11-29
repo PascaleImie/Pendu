@@ -15,7 +15,7 @@ public class Serveur {
     private Scanner sc = new Scanner(System.in);
 
 public Serveur(){
-    Socket socket
+
 
 
     }

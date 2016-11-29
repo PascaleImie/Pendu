@@ -31,14 +31,23 @@ public class Joueur {
     public void run() throws IOException {
         //System.out.println("***hello Serveur***");
         String message ="";
+
+        message=objectInputStream.readUTF();
+        System.out.println(message);
+        message=objectInputStream.readUTF();
+        System.out.println(message);
         while (true) {
             //Recupère le message du serveur
             message=objectInputStream.readUTF();
             //lis un string dans un format UTF
-            System.out.println("Le serveur dit :" + message);
-            System.out.println("Saisir une lettre :");
+            System.out.println(message);
             objectOutputStream.writeUTF(sc.nextLine());
             objectOutputStream.flush();
+            //Recupère le message du serveur
+            message=objectInputStream.readUTF();
+            //lis un string dans un format UTF
+            System.out.println(message);
+
         }
 
     }

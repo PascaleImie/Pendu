@@ -15,6 +15,7 @@ public class Serveur {
     private ObjectOutputStream objectOutputStream;
     private Scanner sc = new Scanner(System.in);
 
+
 public Serveur() throws IOException {
 
     socketServer = new ServerSocket(8003);
@@ -27,23 +28,34 @@ public Serveur() throws IOException {
     }
 
     public void run() throws IOException {
+        String motSecret = "bateau";
+        String motJoueur = motSecret.replaceAll(".", "*");
         char lettre;
         int coupRestant=10;
 
-
         objectOutputStream.writeUTF("Bienvenue dans le Pendu");
         objectOutputStream.flush();
+        objectOutputStream.writeUTF(motJoueur.toString());
+        objectOutputStream.flush();
 
-    while(coupRestant<=10){
-        coupRestant--;
-        System.out.println("Il vous reste"+coupRestant+"à jouer");
+        while (true) {
+            objectOutputStream.writeUTF("Saisir une lettre : ");
+            objectOutputStream.flush();
 
+            lettre=objectInputStream.readChar();
+            System.out.println(lettre);
 
+            // Modification du motJoueur
 
+            objectOutputStream.writeUTF(motJoueur.toString());
+            objectOutputStream.flush();
+        }
     }
-    }
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws IOException {
         System.out.println("Bienvenue");
+        Serveur s = new Serveur();
+        s.run();
     }
 
 }

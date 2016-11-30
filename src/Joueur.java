@@ -56,7 +56,7 @@ public class Joueur {
     }
 
     public static void main(String[] args) throws IOException {
-        new JFenetre();
+        new JFenetreAccueil();
         Joueur j = new Joueur();
         j.run();
     }

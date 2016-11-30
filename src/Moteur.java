@@ -60,12 +60,11 @@ public class Moteur {
             if (coupRestant == 0){
                 return messageToServer = "Vous avez perdu, vous êtes mauvais... :'(";
             }else{
-                return messageToServer = "Le mot à deviner ne contient pas la lettre " + lettre + ". Il vous reste " + coupRestant + " essai(s)";
+                return messageToServer = motJoueur.toString() + "Le mot à deviner ne contient pas la lettre " + lettre + ". Il vous reste " + coupRestant + " essai(s)";
             }
 
         } else if(!motJoueur.toString().contains("*")){
-            return messageToServer = "VICTOIRE !!";
-
+            return messageToServer = "VICTOIRE !! VOUS AVEZ TROUVÉ LE MOT " + motSecret;
         }else{
             return messageToServer = motJoueur.toString();
         }

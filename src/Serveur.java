@@ -19,7 +19,7 @@ public class Serveur {
 public Serveur() throws IOException {
 
     socketServer = new ServerSocket(8003);
-    System.out.println("Le serveur est à l'écoute du port"+socketServer.getLocalPort());
+    System.out.println("Le serveur est à l'écoute du port "+socketServer.getLocalPort());
     connection = socketServer.accept();
     System.out.println("Un joueur s'est connecté");
     objectOutputStream = new ObjectOutputStream(connection.getOutputStream());
@@ -34,6 +34,7 @@ public Serveur() throws IOException {
         char lettre;
         int coupRestant=10;
 
+
         objectOutputStream.writeUTF("Bienvenue dans le Pendu");
         objectOutputStream.flush();
         objectOutputStream.writeUTF(motJoueur.toString());
@@ -42,16 +43,9 @@ public Serveur() throws IOException {
         while (true) {
             objectOutputStream.writeUTF("Saisir une lettre : ");
             objectOutputStream.flush();
-
-            lettre=objectInputStream.readChar();
+            //le serveur récupère la lettre saisie par le joueur
+            lettre = objectInputStream.readChar();
             System.out.println(lettre);
-//            System.out.println(lettre);
-
-//            for(int i = 0; i < motSecret.length(); i++){
-//                if(motSecret.indexOf(i) == lettre){
-//                    motJoueur.rep
-//                }
-//            }
 
             int index = motSecretCopy.indexOf(String.valueOf(lettre));
             System.out.println(index);
@@ -60,22 +54,27 @@ public Serveur() throws IOException {
                 motSecretCopy.setCharAt(index, '*');
                 index = motSecretCopy.indexOf(String.valueOf(lettre));
             }
+            if (!motSecret.contains(String.valueOf(lettre))) {
 
-            // Modification du motJoueur
+                objectOutputStream.writeUTF("Le mot à deviner ne contient pas la lettre " + lettre);
+                coupRestant--;
+                objectOutputStream.writeUTF("Il vous reste " + coupRestant + " essai(s)");
+                objectOutputStream.flush();
+            } else {
 
-            objectOutputStream.writeUTF(motJoueur.toString());
-            objectOutputStream.flush();
+                objectOutputStream.writeUTF(motJoueur.toString());
+                objectOutputStream.flush();
+            }
+
+
         }
+
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Bienvenue");
         Serveur s = new Serveur();
         s.run();
     }
 
-    public static String replaceCharAt(String s, int pos, char c) {
-        return s.substring(0,pos) + c + s.substring(pos+1);
-    }
 
 }

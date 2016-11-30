@@ -28,7 +28,7 @@ public Serveur() throws IOException {
     }
 
     public void run() throws IOException {
-        String motSecret = "bateau";
+        String motSecret = "anticonstitutionellement";
         StringBuilder motSecretCopy = new StringBuilder(motSecret);
         StringBuilder motJoueur = new StringBuilder(motSecret.replaceAll(".", "*"));
         char lettre;

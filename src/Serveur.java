@@ -29,7 +29,8 @@ public Serveur() throws IOException {
 
     public void run() throws IOException {
         String motSecret = "bateau";
-        String motJoueur = motSecret.replaceAll(".", "*");
+        StringBuilder motSecretCopy = new StringBuilder(motSecret);
+        StringBuilder motJoueur = new StringBuilder(motSecret.replaceAll(".", "*"));
         char lettre;
         int coupRestant=10;
 
@@ -44,6 +45,21 @@ public Serveur() throws IOException {
 
             lettre=objectInputStream.readChar();
             System.out.println(lettre);
+//            System.out.println(lettre);
+
+//            for(int i = 0; i < motSecret.length(); i++){
+//                if(motSecret.indexOf(i) == lettre){
+//                    motJoueur.rep
+//                }
+//            }
+
+            int index = motSecretCopy.indexOf(String.valueOf(lettre));
+            System.out.println(index);
+            while (index >= 0) {
+                motJoueur.setCharAt(index, lettre);
+                motSecretCopy.setCharAt(index, '*');
+                index = motSecretCopy.indexOf(String.valueOf(lettre));
+            }
 
             // Modification du motJoueur
 
@@ -56,6 +72,10 @@ public Serveur() throws IOException {
         System.out.println("Bienvenue");
         Serveur s = new Serveur();
         s.run();
+    }
+
+    public static String replaceCharAt(String s, int pos, char c) {
+        return s.substring(0,pos) + c + s.substring(pos+1);
     }
 
 }

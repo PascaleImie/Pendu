@@ -41,8 +41,10 @@ public class Joueur {
             message=objectInputStream.readUTF();
             //lis un string dans un format UTF
             System.out.println(message);
-            objectOutputStream.writeUTF(sc.nextLine());
+
+            objectOutputStream.writeChar(sc.nextLine().charAt(0));
             objectOutputStream.flush();
+
             //Recupère le message du serveur
             message=objectInputStream.readUTF();
             //lis un string dans un format UTF

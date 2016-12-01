@@ -9,6 +9,10 @@ import java.awt.*;
 public class Pendu extends JPanel{
 
 
+    public Pendu() {
+        this.setVisible(true);
+        this.setBackground(Color.black);
+    }
 
     public void paintComponent(Graphics g){
 

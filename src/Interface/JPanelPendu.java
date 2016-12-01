@@ -10,7 +10,7 @@ import java.awt.*;
 public class JPanelPendu extends JPanel{
 
     private final JPanelPenduNorth panNorth;
-    private final JPanelPenduCenter panSouth;
+    private final JPanelPenduCenter panCenter;
 
     public JPanelPendu(){
 
@@ -20,11 +20,11 @@ public class JPanelPendu extends JPanel{
 
         panNorth = new JPanelPenduNorth();
         panNorth.setSize(new Dimension(1200,200));
-        panSouth = new JPanelPenduCenter();
-        panSouth.setSize(new Dimension(1200,400));
+        panCenter = new JPanelPenduCenter();
+        panCenter.setSize(new Dimension(1200,400));
 
         this.add(panNorth, BorderLayout.NORTH);
-        this.add(panSouth, BorderLayout.CENTER);
+        this.add(panCenter, BorderLayout.CENTER);
     }
 
     public JPanelPenduNorth getPanNorth() {
@@ -32,6 +32,6 @@ public class JPanelPendu extends JPanel{
     }
 
     public JPanelPenduCenter getPanSouth() {
-        return panSouth;
+        return panCenter;
     }
 }

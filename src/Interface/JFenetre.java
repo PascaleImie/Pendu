@@ -13,7 +13,6 @@ import java.awt.*;
 public class JFenetre extends JFrame{
 
     private final JPanelMain panelMain;
-    // CARDLAYOUT
     private CardLayout cardLayout;
     private Joueur joueur;
 
@@ -26,9 +25,7 @@ public class JFenetre extends JFrame{
         this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
 
         // CREATION DU CARD LAYOUT
-
         panelMain = new JPanelMain();
-
         this.setContentPane(panelMain);
         this.setVisible(true);
     }

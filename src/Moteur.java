@@ -22,17 +22,17 @@ public class Moteur {
     }
 
 
-    private void lancerPartie() throws SQLException {
+    private void lancerPartie() throws SQLException, ClassNotFoundException {
         motSecret = generateMotAlea();
         System.out.println(motSecret);
         motSecretCopy = new StringBuilder(motSecret);
         motJoueur = new StringBuilder(motSecret.replaceAll(".","*"));
 
     }
-    private String generateMotAlea() throws SQLException {
-        Bdd bdd = Bdd.getMySql();
+    private String generateMotAlea() throws SQLException, ClassNotFoundException {
+        Bdd bdd = Bdd.getBdd();
         Random r = new Random();
-        int index = r.nextInt(bdd.getNbMot());
+        int index = r.nextInt(bdd.getNbMots());
         String mot = bdd.getMot(index);
         return mot;
     }
@@ -59,7 +59,7 @@ public class Moteur {
             return messageToServer = motJoueur.toString();
         }
     }
-    public Message getRequest(Message message) throws SQLException {
+    public Message getRequest(Message message) throws SQLException, ClassNotFoundException {
         if (message.getCle().equals("MotAleatoire")) {
             return new Message("MotAleatoire", generateMotAlea());
 

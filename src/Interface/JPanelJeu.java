@@ -1,3 +1,5 @@
+package Interface;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -6,17 +8,26 @@ import java.awt.*;
  */
 public class JPanelJeu extends JPanel {
 
+    private final JPanelPendu panPendu;
+    private final JPanelScore panScore;
     private BorderLayout borderLayout;
 
     public JPanelJeu(){
         borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
 
-        JPanelPendu panPendu  = new JPanelPendu();
-        JPanelScore panScore = new JPanelScore();
+        panPendu  = new JPanelPendu();
+        panScore = new JPanelScore();
 
         this.add(panPendu, BorderLayout.WEST);
         this.add(panScore, BorderLayout.EAST);
     }
 
+    public JPanelPendu getPanPendu() {
+        return panPendu;
+    }
+
+    public JPanelScore getPanScore() {
+        return panScore;
+    }
 }

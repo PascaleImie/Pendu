@@ -1,3 +1,5 @@
+package Interface;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +11,6 @@ public class Pendu extends JPanel{
 
 
     public void paintComponent(Graphics g){
-
 
         //****************Potance**************
         //x, y,width, height

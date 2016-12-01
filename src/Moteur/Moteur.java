@@ -1,3 +1,8 @@
+package Moteur;
+
+import Utilitaires.Bdd;
+import Utilitaires.Message;
+
 import java.sql.SQLException;
 import java.util.Random;
 
@@ -24,7 +29,6 @@ public class Moteur {
 
     private void lancerPartie() throws SQLException, ClassNotFoundException {
         motSecret = generateMotAlea();
-        System.out.println(motSecret);
         motSecretCopy = new StringBuilder(motSecret);
         motJoueur = new StringBuilder(motSecret.replaceAll(".","*"));
 
@@ -62,14 +66,13 @@ public class Moteur {
     public Message getRequest(Message message) throws SQLException, ClassNotFoundException {
         if (message.getCle().equals("MotAleatoire")) {
             return new Message("MotAleatoire", generateMotAlea());
-
         } else if (message.getCle().equals("Decrypt")) {
             this.decryptMot((Character) message.getValue());
-            return new Message("Decrypt", motJoueur);
+            return new Message("Decrypt", motJoueur.toString());
 
         } else if (message.getCle().equals("Initialiser")) {
             this.lancerPartie();
-            return new Message("Initialiser", motJoueur);
+            return new Message("Initialiser", motJoueur.toString());
 
         } else if (message.getCle().equals("GestionTours")) {
             this.gestionTours((Character)message.getValue());

@@ -1,4 +1,7 @@
-import com.mysql.fabric.Server;
+package Serveur;
+
+import Moteur.Moteur;
+import Utilitaires.Message;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,7 +9,6 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
-import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -42,23 +44,19 @@ public class Serveur {
     public void run() throws IOException, SQLException, ClassNotFoundException {
 
         String mot = (String) Moteur.getMoteur().getRequest(new Message("Initialiser", null)).getValue().toString();
-
-        sendMessageToClient("Bienvenue dans le Pendu");
-        sendMessageToClient(mot);
+        //sendMessageToClient(new Utilitaires.Message("MotJoueur", mot));
 
         while (true) {
+            Message message = (Message) objectInputStream.readObject();
+            System.out.println(message.getCle());
+            this.traiterMessage(message);
+        }
+    }
 
-            sendMessageToClient("Saisir une lettre : ");
-
-            // LE SERVEUR RECUPERE LA LETTRE SAISIE PAR LE JOUEUR
-            char lettre = objectInputStream.readChar();
-
-            // MODIFICATION DU MOT
-            mot = String.valueOf(Moteur.getMoteur().getRequest(new Message("Decrypt", lettre)).getValue());
-
-            // GESTION DES TOURS
-            sendMessageToClient(String.valueOf(Moteur.getMoteur().getRequest(new Message("GestionTours", lettre)).getValue()));
-
+    public void traiterMessage(Message message) throws SQLException, ClassNotFoundException, IOException {
+        if (message.getCle().equals("Decrypt")) {
+            String mot = (String) Moteur.getMoteur().getRequest(new Message("Decrypt", message.getValue())).getValue();
+            sendMessageToClient(new Message("Decrypt", mot));
         }
     }
 
@@ -67,8 +65,8 @@ public class Serveur {
         s.run();
     }
 
-    public void sendMessageToClient(String message) throws IOException {
-        objectOutputStream.writeUTF(message);
+    public void sendMessageToClient(Message message) throws IOException {
+        objectOutputStream.writeObject(message);
         objectOutputStream.flush();
     }
 }

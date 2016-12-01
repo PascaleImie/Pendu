@@ -1,11 +1,10 @@
+package Interface;
+
+import Client.Joueur;
+
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import static java.awt.Font.*;
 
 /**
  * Created by Pierre on 30/11/2016.
@@ -13,8 +12,10 @@ import static java.awt.Font.*;
 
 public class JFenetre extends JFrame{
 
+    private final JPanelMain panelMain;
     // CARDLAYOUT
     private CardLayout cardLayout;
+    private Joueur joueur;
 
     public JFenetre(){
 
@@ -26,8 +27,21 @@ public class JFenetre extends JFrame{
 
         // CREATION DU CARD LAYOUT
 
-        this.setContentPane(new JPanelMain());
+        panelMain = new JPanelMain();
+
+        this.setContentPane(panelMain);
         this.setVisible(true);
     }
 
+    public void setEngine(Joueur joueur) {
+        this.joueur = joueur;
+    }
+
+    public Joueur getJoueur() {
+        return joueur;
+    }
+
+    public JPanelMain getPanelMain() {
+        return panelMain;
+    }
 }

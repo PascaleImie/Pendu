@@ -1,15 +1,15 @@
+package Interface;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import static java.awt.Font.BOLD;
 
 /**
  * Created by Pierre on 01/12/2016.
  */
 public class JPanelMain extends JPanel {
 
+    private final JPanelAccueil panAccueil;
+    private final JPanelJeu panJeu;
     private CardLayout cardLayout;
 
     public JPanelMain(){
@@ -17,12 +17,20 @@ public class JPanelMain extends JPanel {
         this.setLayout(cardLayout);
 
         // CREATION DU PANEL ACCUEIL ET DU PANEL JEU
-        JPanelAccueil panAccueil = new JPanelAccueil();
-        JPanelJeu panJeu = new JPanelJeu();
+        panAccueil = new JPanelAccueil();
+        panJeu = new JPanelJeu();
 
         // AJOUT DES PANEL
         this.add(panAccueil);
         this.add(panJeu);
+    }
+
+    public JPanelAccueil getPanAccueil() {
+        return panAccueil;
+    }
+
+    public JPanelJeu getPanJeu() {
+        return panJeu;
     }
 
     public void changeInterface() {

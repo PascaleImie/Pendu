@@ -1,3 +1,5 @@
+package Interface;
+
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
@@ -8,7 +10,9 @@ import java.awt.*;
 public class JPanelScore extends JPanel {
 
     public JPanelScore(){
-        this.setBackground(Color.GREEN);
         this.setPreferredSize(new DimensionUIResource(400,600));
+
+        Pendu pendu = new Pendu();
+        this.add(pendu, BorderLayout.CENTER);
     }
 }

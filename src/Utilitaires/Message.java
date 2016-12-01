@@ -1,3 +1,5 @@
+package Utilitaires;
+
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Random;

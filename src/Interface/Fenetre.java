@@ -1,3 +1,5 @@
+package Interface;
+
 import javax.swing.*;
 
 /**
@@ -5,7 +7,7 @@ import javax.swing.*;
  */
 public class Fenetre extends JFrame {
     private Pendu pendu = new Pendu();
-   // private Bouton bouton = new Bouton('A');
+   // private Interface.Bouton bouton = new Interface.Bouton('A');
 
     public Fenetre(){
         this.setTitle("Le jeu du pendu");

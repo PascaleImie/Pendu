@@ -27,8 +27,6 @@ public class JPanelAccueil extends JPanel implements ActionListener {
         this.add(labelDescription);
         this.add(btnJouer);
         btnJouer.addActionListener(this);
-
-
     }
 
     @Override

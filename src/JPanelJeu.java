@@ -7,9 +7,6 @@ import java.awt.*;
 public class JPanelJeu extends JPanel {
 
     public JPanelJeu(){
-
-        // PANEL JEU
         this.setBackground(Color.GREEN);
-        this.setVisible(true);
     }
 }

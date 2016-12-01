@@ -6,7 +6,17 @@ import java.awt.*;
  */
 public class JPanelJeu extends JPanel {
 
+    private BorderLayout borderLayout;
+
     public JPanelJeu(){
-        this.setBackground(Color.GREEN);
+        borderLayout = new BorderLayout();
+        this.setLayout(borderLayout);
+
+        JPanelPendu panPendu  = new JPanelPendu();
+        JPanelScore panScore = new JPanelScore();
+
+        this.add(panPendu, BorderLayout.WEST);
+        this.add(panScore, BorderLayout.EAST);
     }
+
 }

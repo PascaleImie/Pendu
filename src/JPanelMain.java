@@ -11,6 +11,7 @@ import static java.awt.Font.BOLD;
 public class JPanelMain extends JPanel {
 
     private CardLayout cardLayout;
+
     public JPanelMain(){
         cardLayout = new CardLayout();
         this.setLayout(cardLayout);

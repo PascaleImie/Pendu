@@ -43,8 +43,6 @@ public class Serveur {
 
         String mot = (String) Moteur.getMoteur().getRequest(new Message("Initialiser", null)).getValue().toString();
 
-        int coupRestant=10;
-
         sendMessageToClient("Bienvenue dans le Pendu");
         sendMessageToClient(mot);
 

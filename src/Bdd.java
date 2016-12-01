@@ -1,56 +1,53 @@
-import java.sql.*;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.ResultSetMetaData;
+
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
- * Created by Pascale on 30/11/2016.
+ * Created by Pierre on 30/11/2016.
  */
 public class Bdd {
-    private volatile static Bdd bdd;
-    private Connection conn;
-    private Statement stmt;
-    private PreparedStatement statement;
 
-    private Bdd() throws SQLException {
-        String url = "jdbc:mysql://localhost/pendu";
+    private volatile static Bdd mysqlExecute;
+    private Connection conn;
+
+    private Bdd() throws ClassNotFoundException, SQLException {
+
+        String url = "jdbc:mysql://localhost:3306/pendu";
         String user = "root";
         String passwd = "";
-        System.out.println("connexion réussie");
 
-
-         conn = DriverManager.getConnection(url, user, passwd);
-        System.out.println("Connexion à la bdd réussie");
-
-
+        conn = (Connection) DriverManager.getConnection(url, user, passwd);
+        System.out.println("Connexion à la base de donnée réussie");
     }
 
-
-    public static Bdd getMySql() throws SQLException {
-        if (bdd == null) {
-            bdd = new Bdd();
+    public static synchronized Bdd getBdd() throws SQLException, ClassNotFoundException {
+        if (mysqlExecute == null) {
+            mysqlExecute = new Bdd();
         }
-        return bdd;
+        return mysqlExecute;
     }
 
     public String getMot(int id) throws SQLException {
-        statement = conn.prepareStatement("SELECT mot FROM Dictionnaire WHERE id=?");
-        statement.setInt(1,id);
-        ResultSet rs = statement.executeQuery();
-        rs.next();
-        String mot = rs.getString(1);
-        rs.close();
-        statement.close();
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT mot FROM dictionnaire WHERE id = ?");
+        preparedStatement.setInt(1, id);
+        preparedStatement.setMaxRows(1);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.first();
+        String mot = resultSet.getString("mot");
+        preparedStatement.close();
         return mot;
     }
 
-    public int getNbMot() throws SQLException {
-        stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT count(*) FROM dictionnaire");
-        ResultSetMetaData resultMeta = rs.getMetaData();
-        rs.first();
-        int nbMots = rs.getInt(1);
-        rs.close();
-        stmt.close();
+    public int getNbMots() throws SQLException {
+        ResultSet result = conn.createStatement().executeQuery("SELECT COUNT(*) FROM dictionnaire");
+        ResultSetMetaData resultMetaData = (ResultSetMetaData) result.getMetaData();
+        result.first();
+        int nbMots = result.getInt(1);
+        result . close () ;
         return nbMots;
     }
-
-
 }

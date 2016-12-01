@@ -1,9 +1,12 @@
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.Random;
 
 /**
- * Created by Pascale on 30/11/2016.
+ * Created by Pierre on 30/11/2016.
  */
-public class Message implements Serializable{
+public class Message implements Serializable {
+
 
     private String cle;
     private Object value;
@@ -29,4 +32,3 @@ public class Message implements Serializable{
         this.value = value;
     }
 }
-

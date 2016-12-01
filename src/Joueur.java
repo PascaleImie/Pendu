@@ -8,6 +8,7 @@ import java.util.Scanner;
 /**
  * Created by Pierre on 29/11/2016.
  */
+
 public class Joueur {
 
     private Socket socketClient;
@@ -55,7 +56,8 @@ public class Joueur {
     }
 
     public static void main(String[] args) throws IOException {
-        Joueur  j = new Joueur();
+        new JFenetre();
+        Joueur j = new Joueur();
         j.run();
     }
 

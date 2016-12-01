@@ -84,11 +84,9 @@ public class Moteur {
 
         } else if (message.getCle().equals("GestionTours")) {
             this.gestionTours((Character) message.getValue());
-            return new Message("GestionTours", messageToServer.toString());
+            return new Message("GestionTours", messageToServer);
 
-    }
-
-
+        }
         return null;
     }
 

@@ -53,6 +53,12 @@ public class Joueur {
         if (message.getCle().equals("Decrypt")) {
             String mot = message.getValue().toString();
             ((JLabel) jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanNorth().getComponent(0)).setText(mot);
+        }else if (message.getCle().equals("MotJoueur")) {
+            String mot = message.getValue().toString();
+            ((JLabel) jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanNorth().getComponent(0)).setText(mot);
+        }else if (message.getCle().equals("GestionTours")) {
+            int coupRestant = (int) message.getValue();
+            jfenetre.getPanelMain().getPanJeu().getPanScore().getPendu().setCoupRestant(coupRestant);
         }
     }
 

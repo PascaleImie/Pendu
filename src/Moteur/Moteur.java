@@ -15,7 +15,6 @@ public class Moteur {
     private StringBuilder motSecretCopy;
     private StringBuilder motJoueur;
     private int coupRestant = 10;
-    private String messageToServer="";
 
     private Moteur(){
 
@@ -48,19 +47,11 @@ public class Moteur {
             index = motSecretCopy.indexOf(String.valueOf(lettre));
         }
     }
-    private String gestionTours(char lettre) {
+    private int gestionTours(char lettre) {
         if (!motSecret.contains(String.valueOf(lettre))) {
-            coupRestant--;
-            if (coupRestant == 0) {
-                return messageToServer = "Vous avez perdu !";
-            } else {
-                return messageToServer = "Le mot à deviner ne contient pas la lettre " + lettre +
-                        " Il vous reste " + coupRestant + " essai(s)";
-            }
-        } else if (!motJoueur.toString().contains("*")) {
-            return messageToServer = "C'est gagné !";
-        } else {
-            return messageToServer = motJoueur.toString();
+            return coupRestant--;
+        }else{
+            return coupRestant;
         }
     }
     public Message getRequest(Message message) throws SQLException, ClassNotFoundException {
@@ -76,7 +67,7 @@ public class Moteur {
 
         } else if (message.getCle().equals("GestionTours")) {
             this.gestionTours((Character)message.getValue());
-            return new Message("GestionTours", messageToServer);
+            return new Message("GestionTours", coupRestant);
         }
 
         return null;

@@ -25,6 +25,8 @@ public class Bouton extends JButton implements ActionListener {
         try {
             ((JFenetre) this.getParent().getParent().getParent().getParent().getParent().getParent().getParent()).getJoueur()
                     .sendToServer(new Message("Decrypt", this.getText().charAt(0)));
+            ((JFenetre) this.getParent().getParent().getParent().getParent().getParent().getParent().getParent()).getJoueur()
+                    .sendToServer(new Message("GestionTours", this.getText().charAt(0)));
         } catch (IOException e1) {
             e1.printStackTrace();
         }

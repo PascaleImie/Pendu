@@ -23,6 +23,7 @@ public class Serveur {
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
     private Scanner sc = new Scanner(System.in);
+    private int coupRestant;
 
     public static Serveur getServeur() throws IOException {
         if (serveur == null)
@@ -44,12 +45,17 @@ public class Serveur {
     public void run() throws IOException, SQLException, ClassNotFoundException {
 
         String mot = (String) Moteur.getMoteur().getRequest(new Message("Initialiser", null)).getValue().toString();
-        //sendMessageToClient(new Utilitaires.Message("MotJoueur", mot));
+        sendMessageToClient(new Utilitaires.Message("MotJoueur", mot));
 
         while (true) {
             Message message = (Message) objectInputStream.readObject();
-            System.out.println(message.getCle());
             this.traiterMessage(message);
+
+//            if(coupRestant==0){
+//                break;
+//            }else if (coupRestant==-1){
+//                break;
+//            }
         }
     }
 
@@ -57,6 +63,9 @@ public class Serveur {
         if (message.getCle().equals("Decrypt")) {
             String mot = (String) Moteur.getMoteur().getRequest(new Message("Decrypt", message.getValue())).getValue();
             sendMessageToClient(new Message("Decrypt", mot));
+        }else if (message.getCle().equals("GestionTours")) {
+            coupRestant = (int) Moteur.getMoteur().getRequest(new Message("GestionTours", message.getValue())).getValue();
+            sendMessageToClient(new Message("GestionTours", coupRestant));
         }
     }
 

@@ -23,7 +23,7 @@ public class Serveur {
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
     private Scanner sc = new Scanner(System.in);
-    private int coupRestant;
+    private int coupRestant = 20;
 
     public static Serveur getServeur() throws IOException {
         if (serveur == null)
@@ -44,16 +44,9 @@ public class Serveur {
 
     public void run() throws IOException, SQLException, ClassNotFoundException {
 
-        String mot = (String) Moteur.getMoteur().getRequest(new Message("Initialiser", null)).getValue().toString();
-        sendMessageToClient(new Utilitaires.Message("MotJoueur", mot));
+        this.initialiserPartie();
 
         while (true) {
-//            if(coupRestant==0){
-//                break;
-//            }else if (coupRestant==-1){
-//                break;
-//            }
-
             Message message = (Message) objectInputStream.readObject();
             this.traiterMessage(message);
         }
@@ -67,15 +60,24 @@ public class Serveur {
             coupRestant = (int) Moteur.getMoteur().getRequest(new Message("GestionTours", message.getValue())).getValue();
             sendMessageToClient(new Message("GestionTours", coupRestant));
         }
-    }
-
-    public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
-        Serveur s = getServeur();
-        s.run();
+        else if (message.getCle().equals("RecommencerUnePartie")) {
+            this.initialiserPartie();
+            sendMessageToClient(new Message("GestionTours", 10));
+        }
     }
 
     public void sendMessageToClient(Message message) throws IOException {
         objectOutputStream.writeObject(message);
         objectOutputStream.flush();
+    }
+
+    public void initialiserPartie() throws IOException, SQLException, ClassNotFoundException {
+        String mot = (String) Moteur.getMoteur().getRequest(new Message("Initialiser", null)).getValue().toString();
+        sendMessageToClient(new Utilitaires.Message("MotJoueur", mot));
+    }
+
+    public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
+        Serveur s = getServeur();
+        s.run();
     }
 }

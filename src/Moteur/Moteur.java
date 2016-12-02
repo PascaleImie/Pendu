@@ -14,7 +14,7 @@ public class Moteur {
     private String motSecret;
     private StringBuilder motSecretCopy;
     private StringBuilder motJoueur;
-    private int coupRestant = 10;
+    private int coupRestant;
 
     private Moteur(){
 
@@ -27,11 +27,12 @@ public class Moteur {
 
 
     private void lancerPartie() throws SQLException, ClassNotFoundException {
+        coupRestant = 10;
         motSecret = generateMotAlea();
         motSecretCopy = new StringBuilder(motSecret);
         motJoueur = new StringBuilder(motSecret.replaceAll(".","*"));
-
     }
+
     private String generateMotAlea() throws SQLException, ClassNotFoundException {
         Bdd bdd = Bdd.getBdd();
         Random r = new Random();
@@ -39,6 +40,7 @@ public class Moteur {
         String mot = bdd.getMot(index);
         return mot;
     }
+
     private void decryptMot(char lettre){
         int index = motSecretCopy.indexOf(String.valueOf(lettre));
         while(index>=0){
@@ -52,7 +54,7 @@ public class Moteur {
             return coupRestant--;
         }else{
             if (!String.valueOf(motJoueur).contains("*")){
-                return coupRestant -1;
+                return coupRestant = -1;
             }else{
                 return coupRestant;
             }

@@ -51,7 +51,11 @@ public class Moteur {
         if (!motSecret.contains(String.valueOf(lettre))) {
             return coupRestant--;
         }else{
-            return coupRestant;
+            if (!String.valueOf(motJoueur).contains("*")){
+                return coupRestant -1;
+            }else{
+                return coupRestant;
+            }
         }
     }
     public Message getRequest(Message message) throws SQLException, ClassNotFoundException {

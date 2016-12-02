@@ -48,14 +48,14 @@ public class Serveur {
         sendMessageToClient(new Utilitaires.Message("MotJoueur", mot));
 
         while (true) {
-            Message message = (Message) objectInputStream.readObject();
-            this.traiterMessage(message);
-
 //            if(coupRestant==0){
 //                break;
 //            }else if (coupRestant==-1){
 //                break;
 //            }
+
+            Message message = (Message) objectInputStream.readObject();
+            this.traiterMessage(message);
         }
     }
 

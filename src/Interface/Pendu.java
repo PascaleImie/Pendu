@@ -15,7 +15,6 @@ public class Pendu extends JPanel{
     }
 
     public void paintComponent(Graphics g){
-        System.out.println("TEST");
 
         //****************Potance**************
         //x, y,width, height
@@ -146,9 +145,7 @@ public class Pendu extends JPanel{
 
     public void setCoupRestant(int x){
         this.coupRestant = x;
-        this.revalidate();
         this.repaint();
-        this.validate();
         System.out.println(coupRestant);
     }
 

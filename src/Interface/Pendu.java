@@ -9,13 +9,12 @@ import java.awt.*;
 public class Pendu extends JPanel{
 
     int coupRestant = 10;
-
     public Pendu() {
         this.setSize(100,100);
     }
 
     public void paintComponent(Graphics g){
-
+        super.paintComponent(g);
         //****************Potance**************
         //x, y,width, height
         if( coupRestant == 9){
@@ -117,7 +116,7 @@ public class Pendu extends JPanel{
             g.drawLine(188,215,228,235);
             //******************jambe droite********
             g.drawLine(188,275,228,335);
-        }else if (coupRestant==0){
+        }else if (coupRestant<=0){
             //socle
             g.fillRect(60,390,70,20);
             //vertical
@@ -143,7 +142,6 @@ public class Pendu extends JPanel{
 
     public void setCoupRestant(int x){
         this.coupRestant = x;
-        getParent().getParent().repaint();
-        System.out.println(coupRestant);
+        this.repaint();
     }
 }

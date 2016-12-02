@@ -19,7 +19,7 @@ public class JPanelJeu extends JPanel {
         panPendu  = new JPanelPendu();
         panScore = new JPanelScore();
 
-        this.add(panPendu, BorderLayout.WEST);
+        this.add(panPendu, BorderLayout.CENTER);
         this.add(panScore, BorderLayout.EAST);
     }
 

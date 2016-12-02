@@ -11,7 +11,7 @@ public class Pendu extends JPanel{
     int coupRestant = 10;
 
     public Pendu() {
-        this.setVisible(true);
+        this.setSize(100,100);
     }
 
     public void paintComponent(Graphics g){
@@ -139,14 +139,11 @@ public class Pendu extends JPanel{
             //**************jambe gauche************
             g.drawLine(148,335,188,275);
         }
-
-
     }
 
     public void setCoupRestant(int x){
         this.coupRestant = x;
-        this.repaint();
+        getParent().getParent().repaint();
         System.out.println(coupRestant);
     }
-
 }

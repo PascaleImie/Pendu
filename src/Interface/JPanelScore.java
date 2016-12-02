@@ -9,18 +9,13 @@ import java.awt.*;
  */
 public class JPanelScore extends JPanel {
 
-    Pendu pendu = new Pendu();
+    Pendu pendu;
 
     public JPanelScore(){
-
+        this.pendu = new Pendu();
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new DimensionUIResource(400,600));
-
-        JLabel labelCoupRestant = new JLabel();
-        this.add(labelCoupRestant);
-
-
-        this.add(pendu);
+        this.add(pendu, BorderLayout.CENTER);
     }
 
     public Pendu getPendu() {

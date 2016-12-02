@@ -7,6 +7,7 @@ import java.awt.*;
 /**
  * Created by Pierre on 01/12/2016.
  */
+
 public class JPanelScore extends JPanel {
 
     Pendu pendu;
@@ -16,6 +17,7 @@ public class JPanelScore extends JPanel {
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new DimensionUIResource(400,600));
         this.add(pendu, BorderLayout.CENTER);
+        this.setVisible(true);
     }
 
     public Pendu getPendu() {

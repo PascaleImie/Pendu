@@ -30,4 +30,5 @@ public class JPanelJeu extends JPanel {
     public JPanelScore getPanScore() {
         return panScore;
     }
+
 }

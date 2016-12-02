@@ -22,8 +22,6 @@ public class Serveur {
     private Socket connection;
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
-    private Scanner sc = new Scanner(System.in);
-    private int coupRestant = 20;
 
     public static Serveur getServeur() throws IOException {
         if (serveur == null)
@@ -53,14 +51,13 @@ public class Serveur {
     }
 
     public void traiterMessage(Message message) throws SQLException, ClassNotFoundException, IOException {
-        if (message.getCle().equals("Decrypt")) {
+        if (message.getCle().equals("GestionTours")) {
             String mot = (String) Moteur.getMoteur().getRequest(new Message("Decrypt", message.getValue())).getValue();
             sendMessageToClient(new Message("Decrypt", mot));
-        }else if (message.getCle().equals("GestionTours")) {
-            coupRestant = (int) Moteur.getMoteur().getRequest(new Message("GestionTours", message.getValue())).getValue();
+            int coupRestant = (int) Moteur.getMoteur().getRequest(new Message("GestionTours", message.getValue())).getValue();
             sendMessageToClient(new Message("GestionTours", coupRestant));
-        }
-        else if (message.getCle().equals("RecommencerUnePartie")) {
+
+        }else if (message.getCle().equals("RecommencerUnePartie")) {
             this.initialiserPartie();
             sendMessageToClient(new Message("GestionTours", 10));
         }

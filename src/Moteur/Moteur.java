@@ -50,6 +50,7 @@ public class Moteur {
         }
     }
     private int gestionTours(char lettre) {
+        System.out.println(coupRestant);
         if (!motSecret.contains(String.valueOf(lettre))) {
             return coupRestant--;
         }else{
@@ -60,19 +61,22 @@ public class Moteur {
             }
         }
     }
+
+//    private int etatPartie(){
+//        if (!String.valueOf(motJoueur).contains("*")){
+//    }
     public Message getRequest(Message message) throws SQLException, ClassNotFoundException {
         if (message.getCle().equals("MotAleatoire")) {
             return new Message("MotAleatoire", generateMotAlea());
         } else if (message.getCle().equals("Decrypt")) {
             this.decryptMot((Character) message.getValue());
             return new Message("Decrypt", motJoueur.toString());
-
         } else if (message.getCle().equals("Initialiser")) {
             this.lancerPartie();
             return new Message("Initialiser", motJoueur.toString());
-
         } else if (message.getCle().equals("GestionTours")) {
             this.gestionTours((Character)message.getValue());
+            System.out.println(coupRestant);
             return new Message("GestionTours", coupRestant);
         }
 

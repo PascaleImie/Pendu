@@ -59,11 +59,7 @@ public class Pendu extends JPanel{
         listDessin.add(new Forme("Rectangle", new int[]{90, 95, 10, 300}));
         //**************socle***********
         listDessin.add(new Forme("Rectangle", new int[]{60, 390, 70, 20}));
-
-
         }
-
-
 
     private void draw(Graphics g) {
         for(int i = 9; i >= coupRestant; i--){
@@ -81,20 +77,14 @@ public class Pendu extends JPanel{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         draw(g);
-
-
-        }
-
-
-
-
-
-
+    }
 
     public void setCoupRestant(int x){
         this.coupRestant = x;
-        //getParent().getParent().repaint();
         this.repaint();
-        System.out.println(coupRestant);
+    }
+
+    public int getCoupRestant() {
+        return coupRestant;
     }
 }

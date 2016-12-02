@@ -1,5 +1,6 @@
 package Interface;
 
+import Client.Joueur;
 import Utilitaires.Message;
 
 import javax.swing.*;
@@ -49,13 +50,12 @@ public class JPanelPendu extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        okcancel("Voulez vous vrailent recommencer une nouvelle partie ?");
+        jOptionPane("Voulez vous vrailent recommencer une nouvelle partie ?");
     }
 
     public void recommencerUnePartie(){
         try {
-            ((JFenetre) this.getParent().getParent().getParent().getParent().getParent()).getJoueur()
-                    .sendToServer(new Message("RecommencerUnePartie", null));
+            getJoueur().sendToServer(new Message("RecommencerUnePartie", null));
             for (int i=0; i<26; i++){
                 (this.getPanCenter()).getComponent(i).setEnabled(true);
             }
@@ -65,12 +65,15 @@ public class JPanelPendu extends JPanel implements ActionListener{
         }
     }
 
-    public void okcancel(String theMessage) {
+    public void jOptionPane(String theMessage) {
         int result = JOptionPane.showConfirmDialog((Component) null, theMessage,
                 "Nouvelle partie", JOptionPane.YES_NO_OPTION);
-        System.out.println(result);
         if (result == 0){
             recommencerUnePartie();
         }
+    }
+
+    private Joueur getJoueur() {
+        return ((JFenetre) this.getParent().getParent().getParent().getParent().getParent()).getJoueur();
     }
 }

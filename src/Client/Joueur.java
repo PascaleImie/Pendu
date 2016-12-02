@@ -59,6 +59,7 @@ public class Joueur {
         }else if (message.getCle().equals("GestionTours")) {
             int coupRestant = (int) message.getValue();
             jfenetre.getPanelMain().getPanJeu().getPanScore().getPendu().setCoupRestant(coupRestant);
+            System.out.println("JOUEUR" + coupRestant);
         }
     }
 

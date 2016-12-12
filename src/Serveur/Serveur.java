@@ -54,18 +54,22 @@ public class Serveur {
         if (message.getCle().equals("GestionTours")) {
             String mot = (String) Moteur.getMoteur().getRequest(new Message("Decrypt", message.getValue())).getValue();
             sendMessageToClient(new Message("Decrypt", mot));
-            int coupRestant = (int) Moteur.getMoteur().getRequest(new Message("GestionTours", message.getValue())).getValue();
-            sendMessageToClient(new Message("GestionTours", coupRestant));
-
+            int[] gestionTours = (int[]) Moteur.getMoteur().getRequest(new Message("GestionTours", message.getValue())).getValue();
+            sendMessageToClientWithReset(new Message("GestionTours", gestionTours));
         }else if (message.getCle().equals("RecommencerUnePartie")) {
             this.initialiserPartie();
-            sendMessageToClient(new Message("GestionTours", 10));
+            sendMessageToClient(new Message("GestionTours", new int[]{10,0}));
         }
     }
 
     public void sendMessageToClient(Message message) throws IOException {
         objectOutputStream.writeObject(message);
         objectOutputStream.flush();
+    }
+
+    public void sendMessageToClientWithReset(Message message) throws IOException {
+        objectOutputStream.reset();
+        sendMessageToClient(message);
     }
 
     public void initialiserPartie() throws IOException, SQLException, ClassNotFoundException {

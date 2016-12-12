@@ -12,6 +12,7 @@ import java.io.IOException;
 /**
  * Created by Pascale on 01/12/2016.
  */
+
 public class Bouton extends JButton implements ActionListener {
 
     public Bouton(char c) {
@@ -26,15 +27,12 @@ public class Bouton extends JButton implements ActionListener {
         try {
             getJoueur().sendToServer(new Message("GestionTours", this.getText().charAt(0)));
             Thread.sleep(100);
-            int coupRestant = ((JPanelJeu) this.getParent().getParent().getParent()).getPanScore().getPendu().getCoupRestant();
-
-            System.out.println(coupRestant);
-            if(coupRestant == 0 || coupRestant == -1){
+            int etatPartie = ((JPanelJeu) this.getParent().getParent().getParent()).getPanScore().getPendu().getEtatPartie();
+            if(etatPartie != 0){
                 for (int i=0; i<26; i++){
                     this.getParent().getComponent(i).setEnabled(false);
                 }
             }
-            System.out.println("TEST" + coupRestant);
 
         } catch (IOException e1) {
             e1.printStackTrace();

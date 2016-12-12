@@ -15,6 +15,8 @@ public class Moteur {
     private StringBuilder motSecretCopy;
     private StringBuilder motJoueur;
     private int coupRestant;
+    private int etatPartie;
+    private int [] gestionTours = new int[2];
 
     private Moteur(){
 
@@ -28,6 +30,7 @@ public class Moteur {
 
     private void lancerPartie() throws SQLException, ClassNotFoundException {
         coupRestant = 10;
+        etatPartie = 0;
         motSecret = generateMotAlea();
         motSecretCopy = new StringBuilder(motSecret);
         motJoueur = new StringBuilder(motSecret.replaceAll(".","*"));
@@ -49,22 +52,21 @@ public class Moteur {
             index = motSecretCopy.indexOf(String.valueOf(lettre));
         }
     }
-    private int gestionTours(char lettre) {
-        System.out.println(coupRestant);
+    private int[] gestionTours(char lettre) {
         if (!motSecret.contains(String.valueOf(lettre))) {
-            return coupRestant--;
-        }else{
-            if (!String.valueOf(motJoueur).contains("*")){
-                return coupRestant = -1;
-            }else{
-                return coupRestant;
+            coupRestant--;
+            if(coupRestant==0){
+                etatPartie = -1;
             }
+        }else if(!motJoueur.toString().contains("*")){
+            etatPartie = 1;
         }
+
+        gestionTours[0] = coupRestant;
+        gestionTours[1] = etatPartie;
+        return gestionTours;
     }
 
-//    private int etatPartie(){
-//        if (!String.valueOf(motJoueur).contains("*")){
-//    }
     public Message getRequest(Message message) throws SQLException, ClassNotFoundException {
         if (message.getCle().equals("MotAleatoire")) {
             return new Message("MotAleatoire", generateMotAlea());
@@ -76,8 +78,7 @@ public class Moteur {
             return new Message("Initialiser", motJoueur.toString());
         } else if (message.getCle().equals("GestionTours")) {
             this.gestionTours((Character)message.getValue());
-            System.out.println(coupRestant);
-            return new Message("GestionTours", coupRestant);
+            return new Message("GestionTours", gestionTours);
         }
 
         return null;

@@ -32,6 +32,7 @@ class Forme {
 public class Pendu extends JPanel{
 
     int coupRestant = 10;
+    int etatPartie = 0;
     private Pendu dessin;
     private ArrayList<Forme>listDessin = new ArrayList<>();
 
@@ -82,6 +83,14 @@ public class Pendu extends JPanel{
     public void setCoupRestant(int x){
         this.coupRestant = x;
         this.repaint();
+    }
+
+    public void setEtatPartie(int x){
+        this.etatPartie = x;
+    }
+
+    public int getEtatPartie(){
+        return etatPartie;
     }
 
     public int getCoupRestant() {

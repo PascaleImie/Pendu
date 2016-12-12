@@ -57,9 +57,11 @@ public class Joueur {
             String mot = message.getValue().toString();
             ((JLabel) jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanNorth().getComponent(0)).setText(mot);
         }else if (message.getCle().equals("GestionTours")) {
-            int coupRestant = (int) message.getValue();
+            int coupRestant = ((int[]) message.getValue())[0];
             jfenetre.getPanelMain().getPanJeu().getPanScore().getPendu().setCoupRestant(coupRestant);
-            System.out.println("JOUEUR" + coupRestant);
+
+            int etatPartie = ((int[]) message.getValue())[1];
+            jfenetre.getPanelMain().getPanJeu().getPanScore().getPendu().setEtatPartie(etatPartie);
         }
     }
 
@@ -68,7 +70,6 @@ public class Joueur {
         JFenetre jFenetre = new JFenetre();
         joueur.setUI(jFenetre);
         jFenetre.setEngine(joueur);
-
         joueur.run();
     }
 

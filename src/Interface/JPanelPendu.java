@@ -27,9 +27,9 @@ public class JPanelPendu extends JPanel implements ActionListener{
         this.setBorder(BorderFactory.createMatteBorder(0, 0,0, 2, Color.BLACK));
 
         panNorth = new JPanelPenduNorth();
-        panNorth.setSize(new Dimension(1200,200));
+        panNorth.setSize(new Dimension(800,200));
         panCenter = new JPanelPenduCenter();
-        panCenter.setSize(new Dimension(1200,400));
+        panCenter.setSize(new Dimension(800,200));
         recommencer = new JButton();
         recommencer.setText("Recommencer une partie");
 
@@ -37,6 +37,7 @@ public class JPanelPendu extends JPanel implements ActionListener{
         this.add(panCenter, BorderLayout.CENTER);
         this.add(recommencer, BorderLayout.SOUTH);
         recommencer.addActionListener(this);
+        recommencer.setSize(new Dimension(800,200));
 
     }
 
@@ -50,7 +51,7 @@ public class JPanelPendu extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        jOptionPane("Voulez vous vrailent recommencer une nouvelle partie ?");
+        jOptionPane("Vous allez perdre 1 point, voulez vous vraiment recommencer une nouvelle partie ?");
     }
 
     public void recommencerUnePartie(){

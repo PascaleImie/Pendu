@@ -1,6 +1,9 @@
 package Interface;
 
 import javax.swing.*;
+import java.awt.*;
+
+import static java.awt.Font.BOLD;
 
 /**
  * Created by Pierre on 01/12/2016.

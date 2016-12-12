@@ -19,6 +19,7 @@ public class JPanelPendu extends JPanel implements ActionListener{
     private final JPanelPenduNorth panNorth;
     private final JPanelPenduCenter panCenter;
     private JButton recommencer;
+    private JPanel result;
 
     public JPanelPendu(){
 
@@ -32,6 +33,7 @@ public class JPanelPendu extends JPanel implements ActionListener{
         panCenter.setSize(new Dimension(800,200));
         recommencer = new JButton();
         recommencer.setText("Recommencer une partie");
+
 
         this.add(panNorth, BorderLayout.NORTH);
         this.add(panCenter, BorderLayout.CENTER);

@@ -5,7 +5,6 @@ import sun.java2d.loops.FillRect;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Pascale on 30/11/2016.
@@ -68,12 +67,21 @@ public class Pendu extends JPanel{
             if(f.getType().equals("Ligne")){
                 g.drawLine(f.getTab()[0],f.getTab()[1],f.getTab()[2],f.getTab()[3]);
             } else if(f.getType().equals("Ovale")){
+                g.setColor(Color.pink);
                 g.fillOval(f.getTab()[0],f.getTab()[1],f.getTab()[2],f.getTab()[3]);
             } else if (f.getType().equals("Rectangle")){
+                g.setColor(Color.darkGray);
                 g.fillRect(f.getTab()[0],f.getTab()[1],f.getTab()[2],f.getTab()[3]);
             }
         }
     }
+    /*public void result(){
+        if(coupRestant==0){
+            System.out.println("You loose !");
+        } else {
+            System.out.println("You win !");
+        }
+    }*/
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

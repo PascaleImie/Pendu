@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
- * Created by Pierre on 29/11/2016.
+ * Created by Pascale on 29/11/2016.
  */
 public class Serveur {
 

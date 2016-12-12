@@ -12,7 +12,6 @@ import java.io.IOException;
 /**
  * Created by Pascale on 01/12/2016.
  */
-
 public class Bouton extends JButton implements ActionListener {
 
     public Bouton(char c) {
@@ -27,7 +26,7 @@ public class Bouton extends JButton implements ActionListener {
         try {
             getJoueur().sendToServer(new Message("GestionTours", this.getText().charAt(0)));
             Thread.sleep(100);
-            int etatPartie = ((JPanelJeu) this.getParent().getParent().getParent()).getPanScore().getPendu().getEtatPartie();
+            int etatPartie = ((JPanelJeu) this.getParent().getParent().getParent().getParent()).getPanScore().getPendu().getEtatPartie();
             if(etatPartie != 0){
                 for (int i=0; i<26; i++){
                     this.getParent().getComponent(i).setEnabled(false);
@@ -41,6 +40,6 @@ public class Bouton extends JButton implements ActionListener {
         }
     }
     private Joueur getJoueur() throws IOException {
-        return ((JFenetre) this.getParent().getParent().getParent().getParent().getParent().getParent().getParent()).getJoueur();
+        return ((JFenetre) this.getParent().getParent().getParent().getParent().getParent().getParent().getParent().getParent()).getJoueur();
     }
 }

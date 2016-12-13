@@ -62,7 +62,6 @@ public class Joueur {
             jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("Coup(s) restant(s): "
                     + String.valueOf(coupRestant));
 
-
             int etatPartie = ((int[]) message.getValue())[1];
             if(etatPartie == 1){
                 jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("YOU WIN !");
@@ -71,7 +70,9 @@ public class Joueur {
             }
             jfenetre.getPanelMain().getPanJeu().getPanScore().getPendu().setEtatPartie(etatPartie);
 
-            //System.out.println(coupRestant);
+        }else if (message.getCle().equals("GetScore")) {
+            int score = ((int)message.getValue());
+            ((JLabel) jfenetre.getPanelMain().getPanJeu().getPanScore().getComponent(0)).setText("SCORE : " + String.valueOf(score));
         }
     }
 

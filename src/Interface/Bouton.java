@@ -33,9 +33,7 @@ public class Bouton extends JButton implements ActionListener {
                 }
             }
 
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        } catch (InterruptedException e1) {
+        } catch (IOException | InterruptedException e1) {
             e1.printStackTrace();
         }
     }

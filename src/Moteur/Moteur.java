@@ -16,7 +16,9 @@ public class Moteur {
     private StringBuilder motJoueur;
     private int coupRestant;
     private int etatPartie;
+    private int score;
     private int [] gestionTours = new int[2];
+
 
     private Moteur(){
 
@@ -30,6 +32,9 @@ public class Moteur {
 
     private void lancerPartie() throws SQLException, ClassNotFoundException {
         coupRestant = 10;
+        if(etatPartie==0){
+            score=0;
+        }
         etatPartie = 0;
         motSecret = generateMotAlea();
         motSecretCopy = new StringBuilder(motSecret);
@@ -57,14 +62,20 @@ public class Moteur {
             coupRestant--;
             if(coupRestant==0){
                 etatPartie = -1;
+                score=0;
             }
         }else if(!motJoueur.toString().contains("*")){
             etatPartie = 1;
+            score++;
         }
 
         gestionTours[0] = coupRestant;
         gestionTours[1] = etatPartie;
         return gestionTours;
+    }
+
+    private int getScore(){
+        return score;
     }
 
     public Message getRequest(Message message) throws SQLException, ClassNotFoundException {
@@ -79,9 +90,9 @@ public class Moteur {
         } else if (message.getCle().equals("GestionTours")) {
             this.gestionTours((Character)message.getValue());
             return new Message("GestionTours", gestionTours);
+        } else if (message.getCle().equals("GetScore")) {
+            return new Message("GetScore", getScore());
         }
-
         return null;
-
     }
 }

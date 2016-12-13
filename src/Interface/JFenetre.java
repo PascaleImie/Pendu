@@ -1,16 +1,20 @@
 package Interface;
 
 import Client.Joueur;
+import Utilitaires.Message;
 
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.IOException;
 
 /**
  * Created by Pierre on 30/11/2016.
  */
 
-public class JFenetre extends JFrame{
+public class JFenetre extends JFrame implements WindowListener{
 
     private final JPanelMain panelMain;
     private CardLayout cardLayout;
@@ -28,6 +32,8 @@ public class JFenetre extends JFrame{
         panelMain = new JPanelMain();
         this.setContentPane(panelMain);
         this.setVisible(true);
+
+        this.addWindowListener(this);
     }
 
     public void setEngine(Joueur joueur) {
@@ -40,5 +46,44 @@ public class JFenetre extends JFrame{
 
     public JPanelMain getPanelMain() {
         return panelMain;
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        try {
+            getJoueur().sendToServer(new Message("Deconnexion", null));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.out.println("Closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }

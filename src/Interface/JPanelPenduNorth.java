@@ -13,7 +13,7 @@ public class JPanelPenduNorth extends JPanel {
 
     JPanelPenduNorth(){
         JLabel labelMot = new JLabel();
-        labelMot.setFont(new Font("Arial", BOLD,50));
+        labelMot.setFont(new Font("Arial", BOLD,60));
         this.add(labelMot);
     }
 

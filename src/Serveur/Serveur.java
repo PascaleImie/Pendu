@@ -22,6 +22,7 @@ public class Serveur {
     private Socket connection;
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
+    private boolean etatConnexion = false;
 
     public static Serveur getServeur() throws IOException {
         if (serveur == null)
@@ -33,6 +34,10 @@ public class Serveur {
     private Serveur() throws IOException {
         socketServer = new ServerSocket(8003);
         System.out.println("Le serveur est à l'écoute du port " + socketServer.getLocalPort());
+    }
+
+    private void initConnexion() throws IOException {
+        etatConnexion = true;
         connection = socketServer.accept();
         System.out.println("Un joueur s'est connecté");
         objectOutputStream = new ObjectOutputStream(connection.getOutputStream());
@@ -42,12 +47,19 @@ public class Serveur {
 
     public void run() throws IOException, SQLException, ClassNotFoundException {
 
-        this.initialiserPartie();
+        do {
 
-        while (true) {
-            Message message = (Message) objectInputStream.readObject();
-            this.traiterMessage(message);
-        }
+            this.initConnexion();
+            this.initialiserPartie();
+
+            while (true) {
+                Message message = (Message) objectInputStream.readObject();
+                this.traiterMessage(message);
+
+                if (message.getCle().equals("Deconnexion"))
+                    break;
+            }
+        } while (true) ;
     }
 
     public void traiterMessage(Message message) throws SQLException, ClassNotFoundException, IOException {
@@ -56,9 +68,16 @@ public class Serveur {
             sendMessageToClient(new Message("Decrypt", mot));
             int[] gestionTours = (int[]) Moteur.getMoteur().getRequest(new Message("GestionTours", message.getValue())).getValue();
             sendMessageToClientWithReset(new Message("GestionTours", gestionTours));
-        }else if (message.getCle().equals("RecommencerUnePartie")) {
+            int score = (int) Moteur.getMoteur().getRequest(new Message("GetScore", message.getValue())).getValue();
+            sendMessageToClient(new Message("GetScore", score));
+        } else if (message.getCle().equals("RecommencerUnePartie")) {
             this.initialiserPartie();
-            sendMessageToClient(new Message("GestionTours", new int[]{10,0}));
+            sendMessageToClient(new Message("GestionTours", new int[]{10, 0}));
+            int score = (int) Moteur.getMoteur().getRequest(new Message("GetScore", message.getValue())).getValue();
+            sendMessageToClient(new Message("GetScore", score));
+        } else if (message.getCle().equals("Deconnexion")) {
+            objectInputStream.close();
+            objectOutputStream.close();
         }
     }
 

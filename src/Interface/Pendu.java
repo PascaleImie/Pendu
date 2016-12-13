@@ -75,13 +75,6 @@ public class Pendu extends JPanel{
             }
         }
     }
-    /*public void result(){
-        if(coupRestant==0){
-            System.out.println("You loose !");
-        } else {
-            System.out.println("You win !");
-        }
-    }*/
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

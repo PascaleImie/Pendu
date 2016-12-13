@@ -59,9 +59,19 @@ public class Joueur {
         }else if (message.getCle().equals("GestionTours")) {
             int coupRestant = ((int[]) message.getValue())[0];
             jfenetre.getPanelMain().getPanJeu().getPanScore().getPendu().setCoupRestant(coupRestant);
+            jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("Coup(s) restant(s): "
+                    + String.valueOf(coupRestant));
+
 
             int etatPartie = ((int[]) message.getValue())[1];
+            if(etatPartie == 1){
+                jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("YOU WIN !");
+            } else if(etatPartie == -1){
+                jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("YOU LOOSE!");
+            }
             jfenetre.getPanelMain().getPanJeu().getPanScore().getPendu().setEtatPartie(etatPartie);
+
+            //System.out.println(coupRestant);
         }
     }
 

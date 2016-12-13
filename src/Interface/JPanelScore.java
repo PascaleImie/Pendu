@@ -23,4 +23,5 @@ public class JPanelScore extends JPanel {
     public Pendu getPendu() {
         return pendu;
     }
+
 }

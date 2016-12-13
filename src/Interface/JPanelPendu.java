@@ -38,6 +38,7 @@ public class JPanelPendu extends JPanel implements ActionListener{
         this.add(panNorth, BorderLayout.NORTH);
         this.add(panCenter, BorderLayout.CENTER);
         this.add(recommencer, BorderLayout.SOUTH);
+
         recommencer.addActionListener(this);
         recommencer.setSize(new Dimension(800,200));
 
@@ -60,7 +61,7 @@ public class JPanelPendu extends JPanel implements ActionListener{
         try {
             getJoueur().sendToServer(new Message("RecommencerUnePartie", null));
             for (int i=0; i<26; i++){
-                (this.getPanCenter()).getComponent(i).setEnabled(true);
+                (this.getPanCenter()).getpanEcran().getComponent(i).setEnabled(true);
             }
 
         } catch (IOException e1) {

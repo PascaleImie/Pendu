@@ -63,12 +63,17 @@ public class Joueur {
             String mot = message.getValue().toString();
             ((JLabel) jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanNorth().getComponent(0)).setText(mot);
         }else if (message.getCle().equals("GestionTours")) {
+
             int coupRestant = ((int[]) message.getValue())[0];
             jfenetre.getPanelMain().getPanJeu().getPanScore().getPendu().setCoupRestant(coupRestant);
             //Récupère le nb de coups restants et le transmet au label Result
+
+            int etatPartie = ((int[]) message.getValue())[1];
+            jfenetre.getPanelMain().getPanJeu().getPanScore().getPendu().setEtatPartie(etatPartie);
+
             jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("Coup(s) restant(s): "
                     + String.valueOf(coupRestant));
-            int etatPartie = ((int[]) message.getValue())[1];
+
             if(etatPartie == 1){
                 //Récupère l'état de la partie (1 ou -1) et le transmet au label Result
                 jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("YOU WIN !");
@@ -81,10 +86,10 @@ public class Joueur {
             ((JLabel) jfenetre.getPanelMain().getPanJeu().getPanScore().getComponent(0)).setText("SCORE : " + String.valueOf(score));
         } else if(message.getCle().equals("GetMot")){
             String motDecrypt = (String) message.getValue();
-            jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("YOU LOOSE! ... Le mot était "+motDecrypt);
+            System.out.println(motDecrypt);
+            jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("YOU LOOSE! ... Le mot était " + motDecrypt);
         }
     }
-
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Joueur joueur = new Joueur();

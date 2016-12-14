@@ -62,6 +62,9 @@ public class JPanelPendu extends JPanel implements ActionListener{
             for (int i=0; i<26; i++){
                 (this.getPanCenter()).getpanEcran().getComponent(i).setEnabled(true);
             }
+            this.getPanNorth().getSwingWorker().cancel(true);
+            this.getPanNorth().updateProgressBar();
+            this.getPanNorth().getSwingWorker().execute();
 
         } catch (IOException e1) {
             e1.printStackTrace();

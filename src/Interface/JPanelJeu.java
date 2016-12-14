@@ -21,17 +21,6 @@ public class JPanelJeu extends JPanel {
 
         this.add(panPendu, BorderLayout.CENTER);
         this.add(panScore, BorderLayout.EAST);
-
-
-
-        //int coupRestant = this.getPanScore().getPendu().getCoupRestant();
-
-        //this.getPanPendu().getPanCenter().getResult().setText("Nombre de coup(s) restant(s) "+String.valueOf(etatPartie));
-        /*if(etatPartie==1){
-            this.getPanPendu().getPanCenter().getResult().setText("YOU WIN !!!");
-        } else if(etatPartie==-1) {
-            this.getPanPendu().getPanCenter().getResult().setText("YOU LOOSE !!!");
-        }*/
     }
 
 

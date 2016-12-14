@@ -27,11 +27,8 @@ public class JPanelPenduCenter extends JPanel{
         this.add(result, BorderLayout.SOUTH);
         result.setFont(new Font("Arial", BOLD, 30));
         result.setForeground(Color.RED);
+        result.setText("Coup(s) restant(s) : 10");
         this.result.setHorizontalAlignment(JLabel.CENTER);
-
-        //Recupérer le nb coup restant
-        //int coupRestant = ((JPanelJeu) this.getParent().getParent().getParent()).getPanScore().getPendu().getCoupRestant();
-        //result.setText(String.valueOf(coupRestant));
 
     }
         public JPanel getpanEcran(){

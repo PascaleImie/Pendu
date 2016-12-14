@@ -28,7 +28,8 @@ public class Bouton extends JButton implements ActionListener {
             Thread.sleep(100);
             int etatPartie = ((JPanelJeu) this.getParent().getParent().getParent().getParent()).getPanScore().getPendu().getEtatPartie();
             if(etatPartie != 0){
-                for (int i=0; i<26; i++){
+                ((JPanelPendu)this.getParent().getParent().getParent()).getPanNorth().getSwingWorker().cancel(true);
+                for (int i=0; i<26; i++) {
                     this.getParent().getComponent(i).setEnabled(false);
                 }
             }

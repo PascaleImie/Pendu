@@ -34,6 +34,7 @@ public class JPanelAccueil extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         ((JPanelMain) this.getParent()).changeInterface();
+        ((JPanelMain) this.getParent()).getPanJeu().getPanPendu().getPanNorth().getSwingWorker().execute();
     }
 
 }

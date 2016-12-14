@@ -64,27 +64,49 @@ public class Serveur {
 
     public void traiterMessage(Message message) throws SQLException, ClassNotFoundException, IOException {
         if (message.getCle().equals("GestionTours")) {
+
             String mot = (String) Moteur.getMoteur().getRequest(new Message("Decrypt", message.getValue())).getValue();
             sendMessageToClient(new Message("Decrypt", mot));
             int[] gestionTours = (int[]) Moteur.getMoteur().getRequest(new Message("GestionTours", message.getValue())).getValue();
             sendMessageToClientWithReset(new Message("GestionTours", gestionTours));
             int score = (int) Moteur.getMoteur().getRequest(new Message("GetScore", message.getValue())).getValue();
             sendMessageToClient(new Message("GetScore", score));
+
             //Si l'état de la partie est à -1
             if(gestionTours[1]==-1) {
                 //On récupère le motSecret dans le Moteur et on l'envoit au client
                 String motDecrypt = (String) Moteur.getMoteur().getRequest(new Message("GetMot", message.getValue())).getValue();
                 sendMessageToClient(new Message("GetMot", motDecrypt));
+
             }
         } else if (message.getCle().equals("RecommencerUnePartie")) {
+
             this.initialiserPartie();
             sendMessageToClient(new Message("GestionTours", new int[]{10, 0}));
             int score = (int) Moteur.getMoteur().getRequest(new Message("GetScore", message.getValue())).getValue();
             sendMessageToClient(new Message("GetScore", score));
 
+
+        } else if (message.getCle().equals("TempsEcoule")) {
+
+            int score = (int) Moteur.getMoteur().getRequest(new Message("ScoreTempsEcoule", null)).getValue();
+            int[] gestionTours = (int[]) Moteur.getMoteur().getRequest(new Message("GestionToursTempsEcoule", message.getValue())).getValue();
+
+            sendMessageToClientWithReset(new Message("GestionTours", gestionTours));
+            sendMessageToClient(new Message("GetScore", score));
+
+            if(gestionTours[1]==-1) {
+                //On récupère le motSecret dans le Moteur et on l'envoit au client
+                String motDecrypt = (String) Moteur.getMoteur().getRequest(new Message("GetMot", message.getValue())).getValue();
+                sendMessageToClient(new Message("GetMot", motDecrypt));
+            }
+
+
         } else if (message.getCle().equals("Deconnexion")) {
+
             objectInputStream.close();
             objectOutputStream.close();
+
         }
     }
 

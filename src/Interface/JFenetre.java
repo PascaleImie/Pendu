@@ -6,6 +6,8 @@ import Utilitaires.Message;
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
@@ -14,13 +16,41 @@ import java.io.IOException;
  * Created by Pierre on 30/11/2016.
  */
 
-public class JFenetre extends JFrame implements WindowListener{
+public class JFenetre extends JFrame implements ActionListener, WindowListener{
 
     private final JPanelMain panelMain;
     private CardLayout cardLayout;
     private Joueur joueur;
 
+    private JMenuBar jMenuBar = new JMenuBar();
+    private JMenu jMenuReglages = new JMenu("Réglages");
+    private JMenu jMenuNiveau = new JMenu("Niveau de difficulté");
+    private JRadioButtonMenuItem jMenuItem1 = new JRadioButtonMenuItem("easy");
+    private JRadioButtonMenuItem jMenuItem2 = new JRadioButtonMenuItem("medium");
+    private JRadioButtonMenuItem jMenuItem3 = new JRadioButtonMenuItem("hard");
+    private ButtonGroup bg = new ButtonGroup();
+
     public JFenetre(){
+
+        jMenuReglages.add(jMenuNiveau);
+        jMenuNiveau.add(jMenuItem1);
+        jMenuNiveau.add(jMenuItem2);
+        jMenuNiveau.add(jMenuItem3);
+
+
+
+        bg.add(jMenuItem1);
+        bg.add(jMenuItem2);
+        bg.add(jMenuItem3);
+
+        jMenuItem1.setSelected(true);
+
+        this.jMenuBar.add(jMenuReglages);
+        this.setJMenuBar(jMenuBar);
+
+        jMenuItem1.addActionListener(this);
+        jMenuItem2.addActionListener(this);
+        jMenuItem3.addActionListener(this);
 
         // PARAMÉTRAGE DE LA JFRAME
         this.setTitle ("Jeu du pendu");
@@ -34,6 +64,8 @@ public class JFenetre extends JFrame implements WindowListener{
         this.setVisible(true);
 
         this.addWindowListener(this);
+        this.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(500);
+
     }
 
     public void setEngine(Joueur joueur) {
@@ -64,7 +96,7 @@ public class JFenetre extends JFrame implements WindowListener{
 
     @Override
     public void windowClosed(WindowEvent e) {
-        System.out.println("Closed");
+
     }
 
     @Override
@@ -85,5 +117,16 @@ public class JFenetre extends JFrame implements WindowListener{
     @Override
     public void windowDeactivated(WindowEvent e) {
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand().equals("easy")){
+            this.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(500);
+        }else if(e.getActionCommand().equals("medium")){
+            this.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(300);
+        }else if(e.getActionCommand().equals("hard")){
+            this.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(100);
+        }
     }
 }

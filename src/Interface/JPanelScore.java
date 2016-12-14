@@ -14,7 +14,7 @@ public class JPanelScore extends JPanel {
 
     Pendu pendu;
     BorderLayout borderLayout = new BorderLayout();
-    private JLabel score = new JLabel("SCORE");
+    private JLabel score = new JLabel();
 
     public JPanelScore(){
 
@@ -22,7 +22,7 @@ public class JPanelScore extends JPanel {
 
         JLabel labelScore = new JLabel();
         labelScore.setFont(new Font("Arial", BOLD,50));
-        labelScore.setText("SCORE");
+        labelScore.setText("SCORE : 0");
         this.add(labelScore, BorderLayout.NORTH);
         labelScore.setHorizontalAlignment(JLabel.CENTER);
 

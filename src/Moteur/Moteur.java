@@ -85,16 +85,24 @@ public class Moteur {
             etatPartie = 1;
             score++;
         }
+
         //Coup Restant et etat de la partie sont stockés dans un tableau
         gestionTours[0] = coupRestant;
         gestionTours[1] = etatPartie;
         return gestionTours;
     }
 
+    private void tempsEcoule() {
+        coupRestant=0;
+        score=0;
+        etatPartie=-1;
+        gestionTours[0] = coupRestant;
+        gestionTours[1] = etatPartie;
+    }
+
     private int getScore(){
         return score;
     }
-
 
     public Message getRequest(Message message) throws SQLException, ClassNotFoundException {
         if (message.getCle().equals("MotAleatoire")) {
@@ -112,12 +120,12 @@ public class Moteur {
             return new Message("GetScore", getScore());
         } else if(message.getCle().equals("GetMot")){
             return new Message("GetMot", motSecret);
+        } else if (message.getCle().equals("ScoreTempsEcoule")) {
+            this.tempsEcoule();
+            return new Message("GetScore", getScore());
+        } else if (message.getCle().equals("GestionToursTempsEcoule")){
+            return new Message("GestionTours", gestionTours);
         }
         return null;
     }
-
-
- }
-
-
-
+}

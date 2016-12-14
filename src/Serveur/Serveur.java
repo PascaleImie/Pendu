@@ -70,11 +70,18 @@ public class Serveur {
             sendMessageToClientWithReset(new Message("GestionTours", gestionTours));
             int score = (int) Moteur.getMoteur().getRequest(new Message("GetScore", message.getValue())).getValue();
             sendMessageToClient(new Message("GetScore", score));
+            //Si l'état de la partie est à -1
+            if(gestionTours[1]==-1) {
+                //On récupère le motSecret dans le Moteur et on l'envoit au client
+                String motDecrypt = (String) Moteur.getMoteur().getRequest(new Message("GetMot", message.getValue())).getValue();
+                sendMessageToClient(new Message("GetMot", motDecrypt));
+            }
         } else if (message.getCle().equals("RecommencerUnePartie")) {
             this.initialiserPartie();
             sendMessageToClient(new Message("GestionTours", new int[]{10, 0}));
             int score = (int) Moteur.getMoteur().getRequest(new Message("GetScore", message.getValue())).getValue();
             sendMessageToClient(new Message("GetScore", score));
+
         } else if (message.getCle().equals("Deconnexion")) {
             objectInputStream.close();
             objectOutputStream.close();
@@ -82,6 +89,7 @@ public class Serveur {
     }
 
     public void sendMessageToClient(Message message) throws IOException {
+        //envoi le message au client avec objectOutputStream
         objectOutputStream.writeObject(message);
         objectOutputStream.flush();
     }
@@ -92,8 +100,10 @@ public class Serveur {
     }
 
     public void initialiserPartie() throws IOException, SQLException, ClassNotFoundException {
+        //On appelle la méthode getRequest du moteur avec le mot clé Initialiser
         String mot = (String) Moteur.getMoteur().getRequest(new Message("Initialiser", null)).getValue().toString();
         sendMessageToClient(new Utilitaires.Message("MotJoueur", mot));
+
     }
 
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {

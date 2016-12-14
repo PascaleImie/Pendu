@@ -25,7 +25,7 @@ public class JPanelPenduCenter extends JPanel{
         }
 
         this.add(result, BorderLayout.SOUTH);
-        result.setFont(new Font("Arial", BOLD, 50));
+        result.setFont(new Font("Arial", BOLD, 30));
         result.setForeground(Color.RED);
         this.result.setHorizontalAlignment(JLabel.CENTER);
 

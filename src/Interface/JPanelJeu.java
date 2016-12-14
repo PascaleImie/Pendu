@@ -24,7 +24,7 @@ public class JPanelJeu extends JPanel {
 
 
 
-        int coupRestant = this.getPanScore().getPendu().getCoupRestant();
+        //int coupRestant = this.getPanScore().getPendu().getCoupRestant();
 
         //this.getPanPendu().getPanCenter().getResult().setText("Nombre de coup(s) restant(s) "+String.valueOf(etatPartie));
         /*if(etatPartie==1){

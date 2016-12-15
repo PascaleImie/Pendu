@@ -28,7 +28,7 @@ public class Bouton extends JButton implements ActionListener {
         this.setEnabled(false);
         try {
             getJoueur().sendToServer(new Message("GestionTours", this.getText().charAt(0)));
-            Thread.sleep(100);
+            Thread.sleep(150);
             int etatPartie = ((JPanelJeu) this.getParent().getParent().getParent().getParent()).getPanScore().getPendu().getEtatPartie();
             if(etatPartie != 0){
                 ((JPanelPendu)this.getParent().getParent().getParent()).getPanNorth().getSwingWorker().cancel(true);

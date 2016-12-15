@@ -3,6 +3,8 @@ package Moteur;
 import Utilitaires.Bdd;
 import Utilitaires.Message;
 
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.Random;
 
@@ -17,7 +19,10 @@ public class Moteur {
     private int coupRestant;
     private int etatPartie;
     private int score;
+    private int bestScore;
+    private int [] bestsScores = new int[5];
     private int [] gestionTours = new int[2];
+    private String niveauDeJeu = "";
 
 
     private Moteur(){
@@ -70,20 +75,34 @@ public class Moteur {
     }
 
     //Méthode gestion de tours qui récupère dans un tableau coup restant et état de la partie.
-    private int[] gestionTours(char lettre) {
-        //Si le mot caché par * ne contient pas la lettre cliquée par le joueur
+    private int[] gestionTours(char lettre) throws SQLException, ClassNotFoundException, UnknownHostException {
+
         if (!motSecret.contains(String.valueOf(lettre))) {
-            //On décrémente coup restant
             coupRestant--;
-            //Si il n'y a plus de coup restant, l'état de la partie est à -1 soit perdu et le score est à 0
             if(coupRestant==0){
                 etatPartie = -1;
                 score=0;
             }
-        //Sinon si le mot caché ne contient pas de *, l'état de la partie est à 1 soit gagné et le score est à 1
         }else if(!motJoueur.toString().contains("*")){
+
             etatPartie = 1;
-            score++;
+
+            if(niveauDeJeu.equals("easy")){
+                score++;
+            }else if(niveauDeJeu.equals("medium")){
+                score=score+2;
+            }else if(niveauDeJeu.equals("hard")){
+                score=score+3;
+            }else if(niveauDeJeu.equals("impossible")){
+                score=score+4;
+            }
+
+            if(score>bestScore){
+                Bdd bdd = Bdd.getBdd();
+                bdd.setBestScore(Inet4Address.getLocalHost().getHostAddress(), score);
+                bestScore = bdd.getBestScore(Inet4Address.getLocalHost().getHostAddress());
+            }
+
         }
 
         //Coup Restant et etat de la partie sont stockés dans un tableau
@@ -100,11 +119,43 @@ public class Moteur {
         gestionTours[1] = etatPartie;
     }
 
-    private int getScore(){
+    public int getTime(String niveauDeJeu) {
+        int time = 0;
+        if(niveauDeJeu.equals("easy")){
+            time = 500;
+        }else if(niveauDeJeu.equals("medium")){
+            time=300;
+        }else if(niveauDeJeu.equals("hard")){
+            time=100;
+        }else if(niveauDeJeu.equals("impossible")){
+            time=33;
+        }
+
+        return time;
+
+    }
+
+    private int getScore() throws SQLException, ClassNotFoundException {
         return score;
     }
 
-    public Message getRequest(Message message) throws SQLException, ClassNotFoundException {
+    public int[] getBestsScores() throws SQLException, ClassNotFoundException {
+        Bdd bdd = Bdd.getBdd();
+        bestsScores = bdd.getTenBestsScores();
+        return bestsScores;
+    }
+
+    public void createPlayer() throws UnknownHostException, SQLException, ClassNotFoundException {
+        Bdd bdd = Bdd.getBdd();
+        try {
+            bdd.insertPlayerScore(Inet4Address.getLocalHost().getHostAddress(), 0);
+        }catch(SQLException e){
+            bestScore = bdd.getBestScore(Inet4Address.getLocalHost().getHostAddress());
+        }
+
+    }
+
+    public Message getRequest(Message message) throws SQLException, ClassNotFoundException, UnknownHostException {
         if (message.getCle().equals("MotAleatoire")) {
             return new Message("MotAleatoire", generateMotAlea());
         } else if (message.getCle().equals("Decrypt")) {
@@ -125,6 +176,13 @@ public class Moteur {
             return new Message("GetScore", getScore());
         } else if (message.getCle().equals("GestionToursTempsEcoule")){
             return new Message("GestionTours", gestionTours);
+        }else if (message.getCle().equals("NiveauDeJeu")){
+            niveauDeJeu = ((String) message.getValue());
+            return new Message("NiveauDeJeu", getTime((String)message.getValue()));
+        } else if (message.getCle().equals("CreatePlayer")){
+            this.createPlayer();
+        } else if (message.getCle().equals("Meilleurs scores")){
+            return new Message("Meilleurs scores",getBestsScores());
         }
         return null;
     }

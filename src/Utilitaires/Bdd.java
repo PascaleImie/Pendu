@@ -52,4 +52,44 @@ public class Bdd {
         result . close () ;
         return nbMots;
     }
+
+    public int getBestScore(String hostAddress) throws SQLException {
+        ResultSet result = conn.createStatement().executeQuery("SELECT score FROM bestscore WHERE ip = '"+ hostAddress + "'");
+        result.first();
+        int bestScore = result.getInt(1);
+        result.close () ;
+        return bestScore;
+    }
+
+    public int[] getTenBestsScores() throws SQLException {
+        int [] bestsScores = new int[5];
+        int i = 0;
+        ResultSet result = conn.createStatement().executeQuery("SELECT score FROM bestscore ORDER BY score DESC LIMIT 5");
+        ResultSetMetaData resultMetaData = (ResultSetMetaData) result.getMetaData();
+
+        while(result.next()){
+            bestsScores[i]=result.getInt("score");
+            i++;
+        }
+        result.close();
+
+        return bestsScores;
+    }
+
+    public void insertPlayerScore(String ip, int score) throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO bestscore VALUES ( ?, ? )");
+        preparedStatement.setString(1, ip);
+        preparedStatement.setInt(2, score);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+    }
+
+    public void setBestScore(String ip, int score) throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE bestscore SET score = ? WHERE ip = ? ");
+        preparedStatement.setInt(1, score);
+        preparedStatement.setString(2, ip);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+    }
+
 }

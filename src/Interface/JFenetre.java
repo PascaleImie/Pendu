@@ -1,6 +1,7 @@
 package Interface;
 
 import Client.Joueur;
+import Utilitaires.Bdd;
 import Utilitaires.Message;
 
 import javax.swing.*;
@@ -8,6 +9,7 @@ import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Created by Pierre on 30/11/2016.
@@ -15,22 +17,26 @@ import java.io.IOException;
 
 public class JFenetre extends JFrame implements ActionListener, WindowListener{
 
-    private final JPanelMain panelMain;
-    private CardLayout cardLayout;
+    private JPanelMain panelMain;
     private Joueur joueur;
 
     private JMenuBar jMenuBar = new JMenuBar();
-    private JMenu jMenuReglages = new JMenu("Réglages");
+    private JMenu jMenuReglages = new JMenu("Menu");
     private JMenu jMenuNiveau = new JMenu("Niveau de difficulté");
-    private JRadioButtonMenuItem jMenuItem1 = new JRadioButtonMenuItem("easy");
-    private JRadioButtonMenuItem jMenuItem2 = new JRadioButtonMenuItem("medium");
-    private JRadioButtonMenuItem jMenuItem3 = new JRadioButtonMenuItem("hard");
-    private JRadioButtonMenuItem jMenuItem4 = new JRadioButtonMenuItem("impossible");
+    private JMenuItem jMenuItemBestScores = new JMenuItem ("Meilleurs scores");
+    private JRadioButtonMenuItem jMenuItem1 = new JRadioButtonMenuItem("Easy");
+    private JRadioButtonMenuItem jMenuItem2 = new JRadioButtonMenuItem("Medium");
+    private JRadioButtonMenuItem jMenuItem3 = new JRadioButtonMenuItem("Hard");
+    private JRadioButtonMenuItem jMenuItem4 = new JRadioButtonMenuItem("Impossible");
     private ButtonGroup bg = new ButtonGroup();
+    private JOptionPane jOptionPane1 = new JOptionPane();
+    private int[] bestsScores = new int[5];
 
-    public JFenetre() {
+
+    public JFenetre() throws IOException {
 
         jMenuReglages.add(jMenuNiveau);
+        jMenuReglages.add(jMenuItemBestScores);
         jMenuNiveau.add(jMenuItem1);
         jMenuNiveau.add(jMenuItem2);
         jMenuNiveau.add(jMenuItem3);
@@ -51,6 +57,7 @@ public class JFenetre extends JFrame implements ActionListener, WindowListener{
         jMenuItem2.addActionListener(this);
         jMenuItem3.addActionListener(this);
         jMenuItem4.addActionListener(this);
+        jMenuItemBestScores.addActionListener(this);
 
         // PARAMÉTRAGE DE LA JFRAME
         this.setTitle ("Jeu du pendu");
@@ -61,10 +68,7 @@ public class JFenetre extends JFrame implements ActionListener, WindowListener{
         // CREATION DU CARD LAYOUT
         panelMain = new JPanelMain();
 
-
         this.addWindowListener(this);
-        this.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(500);
-
 
         this.getPanelMain().addKeyListener(new KeyListener() {
 
@@ -154,14 +158,66 @@ public class JFenetre extends JFrame implements ActionListener, WindowListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("easy")){
-            this.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(500);
-        }else if(e.getActionCommand().equals("medium")){
-            this.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(300);
-        }else if(e.getActionCommand().equals("hard")){
-            this.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(100);
-        }else if(e.getActionCommand().equals("impossible")){
-            this.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(33);
+        if(e.getActionCommand().equals("Easy")){
+            try {
+                this.getJoueur().sendToServer(new Message("NiveauDeJeu", "easy"));
+                recommencerUnePartie();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }else if(e.getActionCommand().equals("Medium")){
+            try {
+                this.getJoueur().sendToServer(new Message("NiveauDeJeu", "medium"));
+                recommencerUnePartie();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }else if(e.getActionCommand().equals("Hard")){
+            try {
+                this.getJoueur().sendToServer(new Message("NiveauDeJeu", "hard"));
+                recommencerUnePartie();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }else if(e.getActionCommand().equals("Impossible")){
+            try {
+                this.getJoueur().sendToServer(new Message("NiveauDeJeu", "impossible"));
+                recommencerUnePartie();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }else if(e.getActionCommand().equals("Meilleurs scores")){
+            try {
+                this.getJoueur().sendToServer(new Message("Meilleurs scores", null));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+
+//            for(int i = 0; i<5; i++){
+//                System.out.println(bestsScores[i]);
+//            }
+
+            jOptionPane1.showMessageDialog(null,
+                    "" + bestsScores[0] + "\n" + bestsScores[1] + "\n" + bestsScores[2] + "\n" + bestsScores[3] + "\n" + bestsScores[4],
+                    "Meilleurs scores", JOptionPane.INFORMATION_MESSAGE);
+
         }
+
+
+
+    }
+
+    private void recommencerUnePartie(){
+        this.getPanelMain().getPanJeu().getPanPendu().recommencerUnePartie();
+    }
+
+    public void setBestsScores(int[] bestsScores) {
+        this.bestsScores = bestsScores;
     }
 }

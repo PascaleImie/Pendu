@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -50,6 +51,7 @@ public class Serveur {
         do {
 
             this.initConnexion();
+            this.createPlayer();
             this.initialiserPartie();
 
             while (true) {
@@ -107,6 +109,18 @@ public class Serveur {
             objectInputStream.close();
             objectOutputStream.close();
 
+        } else if (message.getCle().equals("NiveauDeJeu")) {
+
+            int time = (int) Moteur.getMoteur().getRequest(new Message("NiveauDeJeu", message.getValue())).getValue();
+            sendMessageToClient(new Message("NiveauDeJeu", time));
+
+        } else if (message.getCle().equals("Meilleurs scores")) {
+
+            int[] bestsScore = (int[]) Moteur.getMoteur().getRequest(new Message("Meilleurs scores", message.getValue())).getValue();
+            sendMessageToClient(new Message("Meilleurs scores", bestsScore));
+//            for (int i = 0; i<5; i++){
+//                System.out.println(bestsScore[i]);
+//            }
         }
     }
 
@@ -131,5 +145,9 @@ public class Serveur {
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
         Serveur s = getServeur();
         s.run();
+    }
+
+    public void createPlayer() throws SQLException, ClassNotFoundException, UnknownHostException {
+        Moteur.getMoteur().getRequest(new Message("CreatePlayer", null));
     }
 }

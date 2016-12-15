@@ -12,7 +12,7 @@ public class JPanelMain extends JPanel {
     private final JPanelJeu panJeu;
     private CardLayout cardLayout;
 
-    public JPanelMain() {
+    public JPanelMain(){
         cardLayout = new CardLayout();
         this.setLayout(cardLayout);
 

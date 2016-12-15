@@ -44,7 +44,6 @@ public class Bouton extends JButton implements ActionListener {
             e1.printStackTrace();
         }
     }
-
     private Joueur getJoueur() throws IOException {
         return ((JFenetre) this.getParent().getParent().getParent().getParent().getParent().getParent().getParent().getParent()).getJoueur();
     }

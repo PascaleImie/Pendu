@@ -11,6 +11,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
+import static Interface.JPanelPenduCenter.image;
+
 /**
  * Created by Pierre on 29/11/2016.
  */
@@ -77,6 +79,7 @@ public class Joueur {
             if(etatPartie == 1){
                 //Récupère l'état de la partie (1 ou -1) et le transmet au label Result
                 jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("YOU WIN !");
+                jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getPanImage().setIcon(image);
             }
 
             jfenetre.getPanelMain().getPanJeu().getPanScore().getPendu().setEtatPartie(etatPartie);

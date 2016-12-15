@@ -52,6 +52,7 @@ public class Moteur {
         Random r = new Random();
         int index = r.nextInt(bdd.getNbMots());
         String mot = bdd.getMot(index);
+        System.out.println(mot);
         return mot;
     }
 

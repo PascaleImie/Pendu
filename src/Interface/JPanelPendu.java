@@ -8,13 +8,16 @@ import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.security.Key;
 
 /**
  * Created by Pierre on 01/12/2016.
  */
 
-public class JPanelPendu extends JPanel implements ActionListener{
+public class JPanelPendu extends JPanel implements ActionListener , KeyListener{
 
     private final JPanelPenduNorth panNorth;
     private final JPanelPenduCenter panCenter;
@@ -41,6 +44,8 @@ public class JPanelPendu extends JPanel implements ActionListener{
         recommencer.addActionListener(this);
         recommencer.setSize(new Dimension(800,200));
 
+        this.addKeyListener(this);
+
     }
 
     public JPanelPenduNorth getPanNorth() {
@@ -53,7 +58,7 @@ public class JPanelPendu extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        jOptionPane("Voulez vous vraiment recommencer une nouvelle partie ?");
+            jOptionPane("Voulez vous vraiment recommencer une nouvelle partie ?");
     }
 
     public void recommencerUnePartie(){
@@ -81,5 +86,24 @@ public class JPanelPendu extends JPanel implements ActionListener{
 
     private Joueur getJoueur() {
         return ((JFenetre) this.getParent().getParent().getParent().getParent().getParent()).getJoueur();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        System.out.println(e.getKeyChar());
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    public JButton getRecommencer() {
+        return recommencer;
     }
 }

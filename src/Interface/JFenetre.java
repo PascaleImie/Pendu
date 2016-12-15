@@ -6,10 +6,7 @@ import Utilitaires.Message;
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 import java.io.IOException;
 
 /**
@@ -28,20 +25,22 @@ public class JFenetre extends JFrame implements ActionListener, WindowListener{
     private JRadioButtonMenuItem jMenuItem1 = new JRadioButtonMenuItem("easy");
     private JRadioButtonMenuItem jMenuItem2 = new JRadioButtonMenuItem("medium");
     private JRadioButtonMenuItem jMenuItem3 = new JRadioButtonMenuItem("hard");
+    private JRadioButtonMenuItem jMenuItem4 = new JRadioButtonMenuItem("impossible");
     private ButtonGroup bg = new ButtonGroup();
 
-    public JFenetre(){
+    public JFenetre() {
 
         jMenuReglages.add(jMenuNiveau);
         jMenuNiveau.add(jMenuItem1);
         jMenuNiveau.add(jMenuItem2);
         jMenuNiveau.add(jMenuItem3);
-
+        jMenuNiveau.add(jMenuItem4);
 
 
         bg.add(jMenuItem1);
         bg.add(jMenuItem2);
         bg.add(jMenuItem3);
+        bg.add(jMenuItem4);
 
         jMenuItem1.setSelected(true);
 
@@ -51,6 +50,7 @@ public class JFenetre extends JFrame implements ActionListener, WindowListener{
         jMenuItem1.addActionListener(this);
         jMenuItem2.addActionListener(this);
         jMenuItem3.addActionListener(this);
+        jMenuItem4.addActionListener(this);
 
         // PARAMÉTRAGE DE LA JFRAME
         this.setTitle ("Jeu du pendu");
@@ -60,11 +60,44 @@ public class JFenetre extends JFrame implements ActionListener, WindowListener{
 
         // CREATION DU CARD LAYOUT
         panelMain = new JPanelMain();
-        this.setContentPane(panelMain);
-        this.setVisible(true);
+
 
         this.addWindowListener(this);
         this.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(500);
+
+
+        this.getPanelMain().addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+                    if (getPanelMain().getPanAccueil().isVisible()) {
+                        getPanelMain().getPanAccueil().btnJouer.doClick();
+                    }else{
+                        getPanelMain().getPanJeu().getPanPendu().getRecommencer().doClick();
+                    }
+                } else {
+                    for (int i =0; i<26; i++){
+                        if(((Bouton) getPanelMain().getPanJeu().getPanPendu().getPanCenter().getpanEcran().getComponent(i)).getText().equals((String.valueOf(e.getKeyChar()).toUpperCase()))){
+                            ((Bouton)getPanelMain().getPanJeu().getPanPendu().getPanCenter().getpanEcran().getComponent(i)).doClick();
+                        }
+                    }
+                }
+            }
+        });
+
+        this.getPanelMain().setFocusable(true);
+        this.getPanelMain().requestFocus();
+        this.getPanelMain().requestFocusInWindow();
+
+        this.setContentPane(panelMain);
+        this.setVisible(true);
 
     }
 
@@ -127,6 +160,8 @@ public class JFenetre extends JFrame implements ActionListener, WindowListener{
             this.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(300);
         }else if(e.getActionCommand().equals("hard")){
             this.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(100);
+        }else if(e.getActionCommand().equals("impossible")){
+            this.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(33);
         }
     }
 }

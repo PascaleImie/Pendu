@@ -86,7 +86,6 @@ public class Joueur {
             ((JLabel) jfenetre.getPanelMain().getPanJeu().getPanScore().getComponent(0)).setText("SCORE : " + String.valueOf(score));
         } else if(message.getCle().equals("GetMot")){
             String motDecrypt = (String) message.getValue();
-            System.out.println(motDecrypt);
             jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("YOU LOOSE! ... Le mot était " + motDecrypt);
         }
     }

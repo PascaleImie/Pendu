@@ -2,13 +2,16 @@ package Interface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import static java.awt.Font.BOLD;
 
 /**
  * Created by Pierre on 01/12/2016.
  */
-public class JPanelPenduCenter extends JPanel{
+public class JPanelPenduCenter extends JPanel {
     private JLabel result = new JLabel();
     private JPanel panEcran = new JPanel();
     private BorderLayout borderLayout;
@@ -16,6 +19,7 @@ public class JPanelPenduCenter extends JPanel{
 
 
     JPanelPenduCenter(){
+        this.requestFocus();
         borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
         this.add(panEcran);
@@ -31,13 +35,12 @@ public class JPanelPenduCenter extends JPanel{
         this.result.setHorizontalAlignment(JLabel.CENTER);
 
     }
-        public JPanel getpanEcran(){
-            return panEcran;
-        }
 
-        public JLabel getResult() {
-            return result;
-        }
+    public JPanel getpanEcran(){
+        return panEcran;
+    }
 
-
+    public JLabel getResult() {
+        return result;
+    }
 }

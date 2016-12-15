@@ -12,13 +12,15 @@ import static java.awt.Font.BOLD;
  */
 public class JPanelAccueil extends JPanel implements ActionListener {
 
+    public final JButton btnJouer;
+
     public JPanelAccueil(){
 
         // JLABEL
         JLabel labelTitre = new JLabel();
         JLabel labelDescription = new JLabel();
         // JBUTTON
-        JButton btnJouer = new JButton("JOUER !");
+        btnJouer = new JButton("JOUER !");
 
         labelTitre.setText("JEU DU PENDU");
         labelTitre.setFont(new Font("Arial", BOLD,30));

@@ -5,8 +5,7 @@ import Utilitaires.Message;
 
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
 
 /**
@@ -22,6 +21,10 @@ public class Bouton extends JButton implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        onButtonPress();
+    }
+
+    private void onButtonPress(){
         this.setEnabled(false);
         try {
             getJoueur().sendToServer(new Message("GestionTours", this.getText().charAt(0)));
@@ -33,11 +36,15 @@ public class Bouton extends JButton implements ActionListener {
                     this.getParent().getComponent(i).setEnabled(false);
                 }
             }
+            ((JPanelMain) this.getParent().getParent().getParent().getParent().getParent()).setFocusable(true);
+            ((JPanelMain) this.getParent().getParent().getParent().getParent().getParent()).requestFocus();
+            ((JPanelMain) this.getParent().getParent().getParent().getParent().getParent()).requestFocusInWindow();
 
         } catch (IOException | InterruptedException e1) {
             e1.printStackTrace();
         }
     }
+
     private Joueur getJoueur() throws IOException {
         return ((JFenetre) this.getParent().getParent().getParent().getParent().getParent().getParent().getParent().getParent()).getJoueur();
     }

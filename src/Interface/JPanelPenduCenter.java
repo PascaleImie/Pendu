@@ -19,6 +19,7 @@ public class JPanelPenduCenter extends JPanel {
     private JLabel panImage = new JLabel();
     private BorderLayout borderLayout;
     public static Icon image;
+    public static Icon imageLooser;
 
 
 
@@ -36,9 +37,12 @@ public class JPanelPenduCenter extends JPanel {
 
 
         image = new ImageIcon(getClass().getClassLoader().getResource("feuxdartifice.gif"));
+        imageLooser = new ImageIcon(getClass().getClassLoader().getResource("looser.gif"));
         //panImage.setIcon(image);
         panImage.setHorizontalAlignment(JLabel.CENTER);
         this.add(panImage, BorderLayout.CENTER);
+
+
 
 
         this.add(result, BorderLayout.SOUTH);

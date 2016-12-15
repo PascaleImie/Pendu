@@ -4,6 +4,7 @@ import Interface.JFenetre;
 import Utilitaires.Message;
 
 import javax.swing.*;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,6 +13,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 import static Interface.JPanelPenduCenter.image;
+import static Interface.JPanelPenduCenter.imageLooser;
 
 /**
  * Created by Pierre on 29/11/2016.
@@ -48,9 +50,13 @@ public class Joueur {
         this.jfenetre.getJoueur().sendToServer(new Message("NiveauDeJeu", "easy"));
         while (true) {
             //récupère le message envoyé par le serveur
-            Message message = (Message) objectInputStream.readObject();
-            //Appelle la méthode traiterMessage
-            this.traiterMessage(message);
+            try {
+                Message message = (Message) objectInputStream.readObject();
+                //Appelle la méthode traiterMessage
+                this.traiterMessage(message);
+            } catch (EOFException e){
+
+            }
         }
     }
 
@@ -91,6 +97,7 @@ public class Joueur {
         } else if(message.getCle().equals("GetMot")){
             String motDecrypt = (String) message.getValue();
             jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("YOU LOOSE! ... Le mot était " + motDecrypt);
+            jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getPanImage().setIcon(imageLooser);
         } else if(message.getCle().equals("NiveauDeJeu")){
             int time = (int) message.getValue();
             jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(time);

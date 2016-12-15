@@ -43,6 +43,7 @@ public class Joueur {
     }
 
     public void run() throws ClassNotFoundException, IOException {
+        this.jfenetre.getJoueur().sendToServer(new Message("NiveauDeJeu", "easy"));
         while (true) {
             //récupère le message envoyé par le serveur
             Message message = (Message) objectInputStream.readObject();
@@ -87,6 +88,12 @@ public class Joueur {
         } else if(message.getCle().equals("GetMot")){
             String motDecrypt = (String) message.getValue();
             jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("YOU LOOSE! ... Le mot était " + motDecrypt);
+        } else if(message.getCle().equals("NiveauDeJeu")){
+            int time = (int) message.getValue();
+            jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(time);
+        } else if(message.getCle().equals("Meilleurs scores")){
+            int[] bestsScores = (int[]) message.getValue();
+            jfenetre.setBestsScores(bestsScores);
         }
     }
 

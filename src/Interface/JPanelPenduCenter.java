@@ -1,12 +1,7 @@
 package Interface;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
 
 import static java.awt.Font.BOLD;
 
@@ -19,7 +14,7 @@ public class JPanelPenduCenter extends JPanel {
     private JLabel panImage = new JLabel();
     private BorderLayout borderLayout;
     public static Icon image;
-    public static Icon imageLooser;
+    public static Icon imageLoser;
 
 
 
@@ -35,10 +30,11 @@ public class JPanelPenduCenter extends JPanel {
         }
         panEcran.setPreferredSize(new Dimension(50,90));
 
-
         image = new ImageIcon(getClass().getClassLoader().getResource("feuxdartifice.gif"));
-        imageLooser = new ImageIcon(getClass().getClassLoader().getResource("looser.gif"));
-        //panImage.setIcon(image);
+        imageLoser = new ImageIcon(getClass().getClassLoader().getResource("pouce.jpg"));
+
+
+
         panImage.setHorizontalAlignment(JLabel.CENTER);
         this.add(panImage, BorderLayout.CENTER);
 

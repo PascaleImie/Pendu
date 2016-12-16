@@ -13,7 +13,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 import static Interface.JPanelPenduCenter.image;
-import static Interface.JPanelPenduCenter.imageLooser;
+import static Interface.JPanelPenduCenter.imageLoser;
 
 /**
  * Created by Pierre on 29/11/2016.
@@ -30,6 +30,7 @@ public class Joueur {
 
     public Joueur() throws IOException {
         socketClient = new Socket(InetAddress.getLocalHost(),8003);
+        //socketClient = new Socket("10.4.1.38",8003);
         System.out.println("Demande de connexion au serveur");
 
         //lire
@@ -88,6 +89,9 @@ public class Joueur {
                 jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("YOU WIN !");
                 jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getPanImage().setIcon(image);
             }
+            if(etatPartie ==0){
+                jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getPanImage().setIcon(null);
+            }
 
             jfenetre.getPanelMain().getPanJeu().getPanScore().getPendu().setEtatPartie(etatPartie);
 
@@ -97,7 +101,7 @@ public class Joueur {
         } else if(message.getCle().equals("GetMot")){
             String motDecrypt = (String) message.getValue();
             jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getResult().setText("YOU LOOSE! ... Le mot était " + motDecrypt);
-            jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getPanImage().setIcon(imageLooser);
+            jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanCenter().getPanImage().setIcon(imageLoser);
         } else if(message.getCle().equals("NiveauDeJeu")){
             int time = (int) message.getValue();
             jfenetre.getPanelMain().getPanJeu().getPanPendu().getPanNorth().setTime(time);
